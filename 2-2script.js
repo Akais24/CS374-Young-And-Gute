@@ -14,7 +14,8 @@ $(document).ready(function() {
            
             else {
 
-		$("#displayDiv").fadeToggle(3000);
+remove();
+		//$("#displayDiv").fadeToggle(3000);
 
                 //$("#displayDiv").hide();
             }
@@ -24,13 +25,13 @@ $(document).ready(function() {
 var fgImage = null;
 
 function loadImage(){
-var imgcanvas = document.getElementById("redcanvas");
-var upimg = document.getElementById("image");
-fgImage = new SimpleImage(upimg);
-fgImage.drawTo(imgcanvas);
+  var imgcanvas = document.getElementById("testcanvas");
+  var upimg = document.getElementById("image");
+  fgImage = new SimpleImage(upimg);
+  fgImage.drawTo(imgcanvas);
 }
 
-function Redscale(){
+/*function Redscale(){
   for(var pixel of fgImage.values()){
      var  avg= (pixel.getRed()+pixel.getGreen()+pixel.getBlue());
   if ( avg < 128) {
@@ -46,4 +47,21 @@ function Redscale(){
   graycanvas =document.getElementById("redcanvas");
   
   fgImage.drawTo(graycanvas);
+}*/
+
+function Redscale(){
+  for(var pixel of fgImage.values()){
+  pixel.setRed(255); 
+}
+  graycanvas =document.getElementById("testcanvas");
+  
+  fgImage.drawTo(graycanvas);
+}
+
+function remove(){
+
+
+  Redscale();
+
+  $("#testDiv").fadeToggle(3000);
 }
