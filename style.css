@@ -6,10 +6,8 @@ body {
 }
 
 :root {
-    --transparent: #0000;
     --header_color: #FFC58B;
     --question_color: #FFD6B3;
-    --result_color: #F7EBE9;
     --main_color: #FFF5F0;
 }
 
@@ -17,74 +15,7 @@ body {
     background: var(--header_color);
 }
 
-.back_button {
-    margin: 10px;
-    height:5%;
-    alt:"";
-}
-
 #section {
     width: 100%;
     height: 100%;
-}
-
-#content {
-    margin: auto;
-    width: 60%;
-    height: 100%;
-    background: var(--result_color);
-}
-
-#question {
-    width: 100%;
-    height: 60%;
-    text-align: center;
-}
-.question_box {
-    display: table;
-    float:left;
-    width:50%;
-    height: 100%;
-    font-size: 50px;
-}
-.question_content{
-    display: table-cell;
-    vertical-align: middle;
-}
-.question_content button{
-    margin: 0px;
-    width: 70%;
-    height: 10%;
-    font-size: 30px;
-    background-color: #FFFFFF;
-    border-radius: 20px;
-    border: solid 3px;
-
-}
-
-#imagebar {
-    margin: auto;
-    width: 90%;
-    height: 35%;
-    text-align: left;
-}
-.imagebar_box {
-    display: table;
-}
-.imagebar_content {
-    display: table-cell;
-    vertical-align: middle;
-    font-size: 20px;
-}
-.candidates {
-    padding: 5px;
-    width: 17%;
-}
-
-.left_align{
-    float: left;
-    text-align:left;
-}
-.center-align{
-    text-align:center;
 }

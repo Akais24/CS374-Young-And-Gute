@@ -1,8 +1,3 @@
-
-var result_yes_button;
-var result_no_button;
-
-$(document).ready(function(){
-    result_yes_button = document.getElementById("result_yes");
-    result_no_button = document.getElementById("result_yes");
-})
+function enter_result() {
+    $("#section").html('<object type="text/html" data="result.html" style="width:100%;height:100%"></object>');
+}
