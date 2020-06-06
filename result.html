@@ -12,49 +12,43 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-light bg-light header" style="margin: 0;">
-        <a class="navbar-brand" href="#">
-            <img src="images/ggyu_logo.png" width="30" height="30" alt="">
-        </a>
-    </nav>
-    
     <div id="section">
         <div id="content">
             <img class="back_button" src = "images/icon.png">
-            <div id ="question">
-                <div class = question_box>
-                    <div class = question_content>
-                        <img src = "images/image-placeholder.png">
-                        <p> Product name</p>
+            <div id ="question" class="wrapper">
+                    <div class = "center_align content w50">
+                        <div class = "wrapper">
+                            <div class = "question content">
+                                <img id="main_img"src = "images/image-placeholder.png">
+                                <p> Product name</p>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class = question_box>
-                    <div class = question_content>
-                        <p> 생각한 것이 맞나요? </p>
-                    </br>
-                        <button id = "result_yes">네(사러가기)</button>
-                        <button id = "result_no">아니요..(질문 계속하기)</button>
+                    <div class = "center_align content w50">
+                        <div class = "wrapper">
+                            <div class = "question content">
+                                <p> 생각한 것이 맞나요? </p>
+                            </br>
+                                <button class="answer_button" id = "result_yes">네! (사러가기)</button>
+                                <button class="answer_button" id = "result_no">아니요.. (질문 계속하기)</button>
+                            </div>
+                        </div>
                     </div>
-                </div>
             </div>
             <div id="imagebar">
-                <div class="imagebar_box">
-                    <div class="imagebar_content">
-                        <p>마크라메 월행잉의 다른 이미지들</p>
-                        <div class = "center-align">
+                <div class="wrapper">
+                    <div class="imagebar content left_align">
+                            <p>마크라메 월행잉의 다른 이미지들</p>
                             <img class = "candidates" src = "images/image-placeholder.png">
                             <img class = "candidates" src = "images/image-placeholder.png">
                             <img class = "candidates" src = "images/image-placeholder.png">
                             <img class = "candidates" src = "images/image-placeholder.png">
                             <img class = "candidates" src = "images/image-placeholder.png">
-                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    
-    <script src="./script.js"></script>
 </body>
 
 </html>
