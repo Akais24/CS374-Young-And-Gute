@@ -15,6 +15,7 @@ nav{
 
 .header {
     background: var(--header_color);
+    height: 60px;
 }
 
 #section {
