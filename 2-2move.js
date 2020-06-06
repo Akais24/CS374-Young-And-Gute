@@ -33,7 +33,10 @@ function loadImage(){
 
 function Redscale(canvas){
   for(var pixel of fgImage.values()){
-  pixel.setRed(255); 
+  pixel.setRed(255);
+  pixel.setGreen(0);
+  pixel.setBlue(0);
+
 }
  // graycanvas =document.getElementById("testcanvas");
   
