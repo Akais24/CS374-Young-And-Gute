@@ -22,27 +22,18 @@ function fout(fun){
 }
 
 function newQ(qni){
-<<<<<<< HEAD
-    //console.log('newQ');
-=======
->>>>>>> a0d6ae2f9941ac91d724055623f1bafcfb87373d
+
     fout(function(){
         var curQNI = qni;
         var query = qni.question;	
         questionIndex = query["qId"];
-<<<<<<< HEAD
-        //console.log(questionIndex);
-=======
->>>>>>> a0d6ae2f9941ac91d724055623f1bafcfb87373d
+
         $(".question").text(query["question"]);
 		$(".choices").empty();
 		
         var choices = query["answers"];
         for(var i=0; i<choices.length; i++){
-<<<<<<< HEAD
-            //console.log(choices[i]);
-=======
->>>>>>> a0d6ae2f9941ac91d724055623f1bafcfb87373d
+
             var b = $('<button type="button" class="btn btn-default">').text(choices[i]).data("idx", i);
             b.click(function(){
                 history.push(curQNI);
@@ -56,10 +47,7 @@ function newQ(qni){
     fin();
 
 	var curimgs = qni.images;
-<<<<<<< HEAD
-        //console.log(curimgs);
-=======
->>>>>>> a0d6ae2f9941ac91d724055623f1bafcfb87373d
+
 
 
 	for(var i=1 ; i<=8 ; i++){
@@ -84,11 +72,7 @@ function newQ(qni){
 
 	}
 
-<<<<<<< HEAD
-	//console.log(imgpnt);
 
-=======
->>>>>>> a0d6ae2f9941ac91d724055623f1bafcfb87373d
 
 	for(img of curimgs){
 		if(actimg ==8)
@@ -114,14 +98,9 @@ function newQ(qni){
 		}
 
 	}
-<<<<<<< HEAD
 	//console.log(imgpnt);
         //console.log(actimg);
 	setTimeout(function(){alignimgs(actimg);}, 500);
-=======
-	
-	setTimeout(function(){alignimgs(actimg);}, 1000);
->>>>>>> a0d6ae2f9941ac91d724055623f1bafcfb87373d
 }
 
 $(".back_button").click(function(){
