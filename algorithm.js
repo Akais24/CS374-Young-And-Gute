@@ -122,3 +122,9 @@ function sortCandidatesByScore(l) {
         return b.score - a.score;
     });
 }
+
+const introImageLimit = 5;
+
+function getIntroImages() {
+    return products.slice(0, introImageLimit);
+}
