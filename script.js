@@ -13,21 +13,9 @@ function set_intro() {
     }
 
     $("#intro_start_btn").click(async function () {
-        await exit_intro();
+		await fadeOutComponentById("intro");
         await start_question();
     });
-}
-
-function enter_intro() {
-    return new Promise((resolve, reject) => {
-        $("#intro").fadeIn(fadeTime, resolve);
-    });
-}
-
-function exit_intro() {
-    return new Promise((resolve, reject) => {
-        $("#intro").fadeOut(fadeTime, resolve);
-    })
 }
 
 function set_fail() {
@@ -35,39 +23,27 @@ function set_fail() {
 		reset_algorithm();
 		reset_query();
 
-        await exit_fail();
-        await enter_intro();
+		await fadeOutComponentById("fail");
+		await fadeInComponentById("intro");
 	});
 	
 	$(".fail_back_button").click(async function () {
 		reset_query();
-		await exit_fail();
-		await enter_question();
+		await fadeOutComponentById("fail");
+		await fadeInComponentById("question");
         newQ(undoAnswer());
     });
 }
 
-function enter_fail() {
+function fadeInComponentById(componentId) {
     return new Promise((resolve, reject) => {
-        $("#fail").fadeIn(fadeTime, resolve);
+        $(`#${componentId}`).fadeIn(fadeTime, resolve);
     });
 }
 
-function exit_fail() {
+function fadeOutComponentById(componentId) {
     return new Promise((resolve, reject) => {
-        $("#fail").fadeOut(fadeTime, resolve);
-    });
-}
-
-function enter_question() {
-    return new Promise((resolve, reject) => {
-        $("#question").fadeIn(fadeTime, resolve);
-    });
-}
-
-function exit_question() {
-    return new Promise((resolve, reject) => {
-        $("#question").fadeOut(fadeTime, resolve);
+        $(`#${componentId}`).fadeOut(fadeTime, resolve);
     });
 }
 
@@ -80,7 +56,7 @@ function slide(){
 }
 
 async function start_question() {
-    enter_question();
+	fadeInComponentById("question");
     newQ(getNextQuestionAndImages(undefined, undefined));
 }
 
@@ -106,8 +82,8 @@ function show_query() {
 
 async function newQ(qni){
     if (qni === undefined) {
-        await exit_question();
-        await enter_fail();
+		await fadeOutComponentById("question");
+		await fadeInComponentById("fail");
         return;
     }
 
@@ -192,9 +168,9 @@ async function newQ(qni){
 $(".back_button").click(async function(){
 	const prevQni = undoAnswer();
 	if (prevQni === undefined) {
-        await exit_question();
+		await fadeOutComponentById("question");
         reset_query();
-        await enter_intro();
+		await fadeInComponentById("intro");
 	} else {
 		newQ(prevQni);
 	}
@@ -423,5 +399,5 @@ set_fail();
 
 $(document).ready(async function() {
     alignimgs(8);
-    await enter_intro();
+	await fadeInComponentById("intro");
 });
