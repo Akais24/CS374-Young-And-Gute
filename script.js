@@ -14,6 +14,11 @@ function enter_intro() {
             $(".intro_examples_image_ul").append(sampleImageItem);
         }
     
+        $("#intro_start_btn").click(async function () {
+            await exit_intro();
+            await start_question();
+        });
+
         $("#intro").fadeIn(fadeTime, resolve);
     });
 }
@@ -41,6 +46,9 @@ function enter_result() {
 }
 function slide(){
     $("#question").animate({marginTop:"0%"},1000);
+}
+
+function start_question() {
 }
 
 // hide all component
