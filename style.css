@@ -112,3 +112,40 @@ nav{
     font-size: 40px;
     color: black;
 }
+
+/* style for fail page */
+#fail {
+    width: 800px;
+    height: 100%;
+    margin: auto;
+    background-color: var(--main_color);
+}
+
+#fail_image_item {
+    width: 550px;
+    height: 550px;
+    padding: 100px;
+    padding-bottom: 50px;
+}
+
+.fail_image {
+    width: 400px;
+    height: 400px;
+    margin: auto;
+}
+
+#fail_text {
+    margin: auto;
+}
+
+#fail_text_main {
+    font-size: 30px;
+}
+
+#fail_text_detail {
+    font-size: 20px;
+}
+
+#fail_button {
+    margin-top: 60px;
+}

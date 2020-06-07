@@ -1,29 +1,43 @@
+const fadeTime = 500;
+
 function enter_intro() {
-    $("#intro").fadeIn(1000);
+    return new Promise((resolve, reject) => {
+        const introImages = getIntroImages();
 
-    const introImages = getIntroImages();
-
-    for (let i = 0; i < introImages.length; i++) {
-        const sampleImageItem = `
-            <li class="intro_examples_image_li">
-                <img src="${introImages[i].mainImage}" class="intro_examples_image_src">
-                <div>${introImages[i].name}</div>
-            </li>`;
-        
-        $(".intro_examples_image_ul").append(sampleImageItem);
-    }
+        for (let i = 0; i < introImages.length; i++) {
+            const sampleImageItem = `
+                <li class="intro_examples_image_li">
+                    <img src="${introImages[i].mainImage}" class="intro_examples_image_src">
+                    <div>${introImages[i].name}</div>
+                </li>`;
+            
+            $(".intro_examples_image_ul").append(sampleImageItem);
+        }
+    
+        $("#intro").fadeIn(fadeTime, resolve);
+    });
 }
 
 function exit_intro() {
-    $("intro").fadeOut();
+    return new Promise((resolve, reject) => {
+        $("#intro").fadeOut(fadeTime, resolve);
+    })
 }
 
+function enter_fail() {
+    return new Promise((resolve, reject) => {
+        $("#fail").fadeIn(fadeTime, resolve);
+    });
+}
+
+function exit_fail() {
+    return new Promise((resolve, reject) => {
+        $("#fail").fadeOut(fadeTime, resolve);
+    });
+}
 
 function enter_result() {
     $("#section").html('<object type="text/html" data="result/result.html" style="width:100%;height:100%;"></object>');
-}
-function enter_fail() {
-    $("#section").html('<object type="text/html" data="fail/fail.html" style="width:100%;height:100%"></object>');
 }
 function slide(){
     $("#question").animate({marginTop:"0%"},1000);
@@ -31,7 +45,8 @@ function slide(){
 
 // hide all component
 $("#intro").hide();
+$("#fail").hide();
 
-$(document).ready(function() {
-    enter_intro();
+$(document).ready(async function() {
+    await enter_intro();
 });
