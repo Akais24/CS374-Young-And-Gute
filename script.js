@@ -353,32 +353,58 @@ function alignimgs(number){
 
 }
 
-$("#btn1").click(function() {
-           
+$("#div1").click(function() {           
 
-		$("#image1").fadeToggle(1000);
-
+		gotoRes(1,imgpnt[1]);
 
 });
 
-
-$("#btn2").click(function() {
+$("#div2").click(function() {
            
-
-		$("#image2").fadeToggle(1000);
+		gotoRes(2,imgpnt[2]);
 
 });
 
-$("#btn3").click(function() {
+$("#div3").click(function() {
            
-
-		$("#image5").fadeToggle(1000);
-$("#image6").fadeToggle(1000);
-$("#image7").fadeToggle(1000);
-$("#image8").fadeToggle(1000);
+		gotoRes(3,imgpnt[3]);
 
 });
 
+$("#div4").click(function() {
+           
+		gotoRes(4,imgpnt[4]);
+
+});
+
+$("#div5").click(function() {
+           
+		gotoRes(5,imgpnt[5]);
+
+});
+
+$("#div6").click(function() {
+           
+		gotoRes(6,imgpnt[6]);
+
+});
+
+$("#div7").click(function() {
+           
+		gotoRes(7,imgpnt[7]);
+
+});
+
+$("#div8").click(function() {
+           
+		gotoRes(8,imgpnt[8]);
+
+});
+
+function gotoRes(imgnum, pId){
+	console.log(imgnum);
+	console.log(pId);
+}
 
 // hide all component
 $("#intro").hide();
