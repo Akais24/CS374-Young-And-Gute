@@ -22,17 +22,17 @@ function fout(fun){
 }
 
 function newQ(qni){
-    console.log('newQ');
+    //console.log('newQ');
     fout(function(){
         var curQNI = qni;
         var query = qni.question;	
         questionIndex = query["qId"];
-        console.log(questionIndex);
+        //console.log(questionIndex);
         $(".question").text(query["question"]);
         $(".choices").empty();
         var choices = query["answers"];
         for(var i=0; i<choices.length; i++){
-            console.log(choices[i]);
+            //console.log(choices[i]);
             var b = $('<button type="button" class="btn btn-default">').text(choices[i]).data("idx", i);
             b.click(function(){
                 history.push(curQNI);
@@ -46,7 +46,7 @@ function newQ(qni){
     fin();
 
 	var curimgs = qni.images;
-        console.log(curimgs);
+        //console.log(curimgs);
 
 
 	for(var i=1 ; i<=8 ; i++){
@@ -61,14 +61,17 @@ function newQ(qni){
 		}
 		
 		if(check == 0){
-			$("#div"+i).fadeToggle(1000);
+			var wrongdiv = document.getElementById("wrongdiv"+i);
+			$(wrongdiv).show();
+			$("#div"+i).fadeToggle(500);
+			$("#wrongdiv"+i).fadeToggle(500);
 			imgpnt[i]=-1;
 			actimg--;
 		}
 
 	}
 
-	console.log(imgpnt);
+	//console.log(imgpnt);
 
 
 	for(img of curimgs){
@@ -86,7 +89,7 @@ function newQ(qni){
 				if(imgpnt[j]==-1){
 					//putimage(j,img.mainImage);
 					putimage(j,"1.jpg");
-					$("#div"+i).fadeToggle(1000);
+					setTimeout(function(div){$(div).fadeIn();}, 1000, document.getElementById("div"+j));
 					imgpnt[j]=img.pId;
 					actimg++;
 					break;
@@ -95,9 +98,9 @@ function newQ(qni){
 		}
 
 	}
-	console.log(imgpnt);
-        console.log(actimg);
-	setTimeout(function(){alignimgs(actimg);}, 1000);
+	//console.log(imgpnt);
+        //console.log(actimg);
+	setTimeout(function(){alignimgs(actimg);}, 500);
 }
 
 $(".back_button").click(function(){
@@ -120,8 +123,11 @@ function alignimgs(number){
 				var down = 50;
 				var right = 50;
 				var div = document.getElementById("div"+i);
-				div.style.top = down +"%";
-				div.style.left = right +"%";
+				var wrongdiv = document.getElementById("wrongdiv"+i);
+				$(wrongdiv).animate({left: right +"%",top: down +"%"}, 500);
+				$(div).animate({left: right +"%",top: down +"%"}, 500);
+				//div.style.top = down +"%";
+				//div.style.left = right +"%";
 				div.style.transform = "translate(-50%, -50%)";
 				j++;
 			}
@@ -132,11 +138,15 @@ function alignimgs(number){
 		for(var i=1 ; i<= 8 ; i++){
 			
 			if(imgpnt[i]!=-1){
+				var div = document.getElementById("div"+i);
 				var down = 50;
 				var right = j*50+25;
-				var div = document.getElementById("div"+i);
-				div.style.top = down +"%";
-				div.style.left = right +"%";
+				var wrongdiv = document.getElementById("wrongdiv"+i);
+				$(wrongdiv).animate({left: right +"%",top: down +"%"}, 500);
+				$(div).animate({left: right +"%",top: down +"%"}, 500);
+				//$(div).animate({top: down +"%"}, 500);
+				//div.style.top = down +"%";
+				//div.style.left = right +"%";
 				div.style.transform = "translate(-50%, -50%)";
 				j++;
 			}
@@ -149,9 +159,14 @@ function alignimgs(number){
 			if(imgpnt[i]!=-1){
 				var down = parseInt((j+1)/2)*50+25;
 				var right =((j+1)%2)*50+25;
+				if(parseInt((j+1)/2) == 0)
+					right = 50;
 				var div = document.getElementById("div"+i);
-				div.style.top = down +"%";
-				div.style.left = right +"%";
+				var wrongdiv = document.getElementById("wrongdiv"+i);
+				$(wrongdiv).animate({left: right +"%",top: down +"%"}, 500);
+				$(div).animate({left: right +"%",top: down +"%"}, 500);
+				//div.style.top = down +"%";
+				//div.style.left = right +"%";
 				div.style.transform = "translate(-50%, -50%)";
 				j++;
 			}
@@ -165,8 +180,11 @@ function alignimgs(number){
 				var down = parseInt(j/2)*50+25;
 				var right =(j%2)*50+25;
 				var div = document.getElementById("div"+i);
-				div.style.top = down +"%";
-				div.style.left = right +"%";
+				var wrongdiv = document.getElementById("wrongdiv"+i);
+				$(wrongdiv).animate({left: right +"%",top: down +"%"}, 500);
+				$(div).animate({left: right +"%",top: down +"%"}, 500);
+				//div.style.top = down +"%";
+				//div.style.left = right +"%";
 				div.style.transform = "translate(-50%, -50%)";
 				j++;
 			}
@@ -179,9 +197,14 @@ function alignimgs(number){
 			if(imgpnt[i]!=-1){
 				var down = parseInt((j+1)/3)*50+25;
 				var right =((j+1)%3)*25+25;
+				if(parseInt((j+1)/3) == 0)
+					right = (j%3)*25+37.5;
 				var div = document.getElementById("div"+i);
-				div.style.top = down +"%";
-				div.style.left = right +"%";
+				var wrongdiv = document.getElementById("wrongdiv"+i);
+				$(wrongdiv).animate({left: right +"%",top: down +"%"}, 500);
+				$(div).animate({left: right +"%",top: down +"%"}, 500);
+				//div.style.top = down +"%";
+				//div.style.left = right +"%";
 				div.style.transform = "translate(-50%, -50%)";
 				j++;
 			}
@@ -195,8 +218,11 @@ function alignimgs(number){
 				var down = parseInt(j/3)*50+25;
 				var right =(j%3)*25+25;
 				var div = document.getElementById("div"+i);
-				div.style.top = down +"%";
-				div.style.left = right +"%";
+				var wrongdiv = document.getElementById("wrongdiv"+i);
+				$(wrongdiv).animate({left: right +"%",top: down +"%"}, 500);
+				$(div).animate({left: right +"%",top: down +"%"}, 500);
+				//div.style.top = down +"%";
+				//div.style.left = right +"%";
 				div.style.transform = "translate(-50%, -50%)";
 				j++;
 			}
@@ -209,9 +235,14 @@ function alignimgs(number){
 			if(imgpnt[i]!=-1){
 				var down = parseInt((j+1)/4)*50+25;
 				var right =((j+1)%4)*25+12.5;
+				if(parseInt((j+1)/4) == 0)
+					right = (j%4)*25+25;
 				var div = document.getElementById("div"+i);
-				div.style.top = down +"%";
-				div.style.left = right +"%";
+				var wrongdiv = document.getElementById("wrongdiv"+i);
+				$(wrongdiv).animate({left: right +"%",top: down +"%"}, 500);
+				$(div).animate({left: right +"%",top: down +"%"}, 500);
+				//div.style.top = down +"%";
+				//div.style.left = right +"%";
 				div.style.transform = "translate(-50%, -50%)";
 				j++;
 			}
@@ -223,8 +254,11 @@ function alignimgs(number){
 			var down = (parseInt((i-1)/4))*50+25;
 			var right = ((i-1)%4)*25+12.5;
 			var div = document.getElementById("div"+i);
-			div.style.top = down +"%";
-			div.style.left = right +"%";
+			var wrongdiv = document.getElementById("wrongdiv"+i);
+			$(div).animate({left: right +"%",top: down +"%"}, 500);
+			$(wrongdiv).animate({left: right +"%",top: down +"%"}, 500);
+			//div.style.top = down +"%";
+			//div.style.left = right +"%";
 			div.style.transform = "translate(-50%, -50%)";
 
 		}

@@ -76,6 +76,21 @@ body {
 	position: absolute;
 	width:200px;
 	height:200px;
+
+	left: 50%;
+	top: 60%;
+	transform: translate(-50%, -50%);
+}
+
+.wrongimgdiv{	
+	position: absolute;
+	width:200px;
+	height:200px;
+	opacity:0.5;
+	display:none;
+	left: 50%;
+	top: 60%;
+	transform: translate(-50%, -50%);
 }
 
 .candidates{
