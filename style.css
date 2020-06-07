@@ -23,3 +23,129 @@ nav{
     height: 93%;
     overflow: hidden;
 }
+
+/* style for intro page */
+#intro {
+    width: 1200px;
+    height: 100%;
+    margin: auto;
+}
+
+#intro_guide {
+    margin-top: 5%;
+}
+
+#intro_guide_main {
+    font-size: 40px;
+}
+
+#intro_guide_detail {
+    font-size: 25px;
+}
+
+#intro_examples {
+    margin-top: 10%;
+}
+
+#intro_examples_image {
+    width: 100%;
+}
+
+#intro_examples_image_text {
+    text-align: left;
+    font-size: 20px;
+    margin-left: 2%;
+}
+
+.intro_examples_image_ul {
+    list-style-type: none;
+    overflow: hidden;
+    /* background-color: var(--main_color); */
+    margin-top: 2%;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0;
+    width: 100%;
+}
+
+.intro_examples_image_li {
+    /* display: inline-block; */
+    float: left;
+    position: relative;
+    width: 16%;
+    margin-left: 2%;
+    margin-right: 2%;
+}
+
+.intro_examples_image_src {
+    width: 100%;
+    height: 100%;
+}
+
+#intro_start {
+    margin-top: 10%;
+}
+
+.btn-custom {
+    /* bootstrap btn */
+    display: inline-block;
+    font-weight: 500;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    border: 1px solid transparent;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    border-radius: .25rem;
+    transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+    /* bootstrap btn-outline-* */
+    /* color: var(--header_color); */
+    background-color: transparent;
+    background-image: none;
+    /* custom */
+    border: 2px solid var(--header_color);
+    font-size: 40px;
+    color: black;
+}
+
+/* style for fail page */
+#fail {
+    width: 800px;
+    height: 100%;
+    margin: auto;
+    background-color: var(--main_color);
+}
+
+#fail_image_item {
+    width: 550px;
+    height: 550px;
+    padding: 100px;
+    padding-bottom: 50px;
+}
+
+.fail_image {
+    width: 400px;
+    height: 400px;
+    margin: auto;
+}
+
+#fail_text {
+    margin: auto;
+}
+
+#fail_text_main {
+    font-size: 30px;
+}
+
+#fail_text_detail {
+    font-size: 20px;
+}
+
+#fail_button {
+    margin-top: 60px;
+}
