@@ -208,7 +208,7 @@ nav{
 	position: absolute;
 	width:200px;
 	height:200px;
-
+	display:none;
 	left: 50%;
 	top: 60%;
 	transform: translate(-50%, -50%);

@@ -63,12 +63,13 @@ function slide(){
 
 async function start_question() {
     console.log("SQ");
-    await enter_question();
+    enter_question();
     newQ(getNextQuestionAndImages(undefined, undefined));
 }
 let history = [];
 let curQNI = undefined;
 let actimg = 0;
+let firstpage = 1;
 
 let imgpnt = [-1,-1,-1,-1,-1,-1,-1,-1,-1];
 
@@ -152,8 +153,9 @@ async function newQ(qni){
 			for(var j=1 ; j<=8 ; j++){
 				if(imgpnt[j]==-1){
 					//putimage(j,img.mainImage);
-					putimage(j,"1.jpg");
-					setTimeout(function(div){$(div).fadeIn();}, 1000, document.getElementById("div"+j));
+					//putimage(j,"1.jpg");
+					putimage(j, "https://drive.google.com/uc?export=view&id=1gpnnJUARu5uA3Q11osy5dwHf9HSi13Ok");
+					setTimeout(function(div){$(div).fadeIn();}, 500, document.getElementById("div"+j));
 					imgpnt[j]=img.pId;
 					actimg++;
 					break;
@@ -173,7 +175,8 @@ $(".back_button").click(function(){
 });
 
 function putimage(img_ind, img_url){
-	document.getElementById("image"+img_ind).src = "images/"+img_url;
+	//document.getElementById("image"+img_ind).src = "images/"+img_url;
+	document.getElementById("image"+img_ind).src = img_url;
 }
 
 function alignimgs(number){
@@ -363,5 +366,6 @@ $("#fail").hide();
 $("#question").hide();
 
 $(document).ready(async function() {
+    alignimgs(8);
     await enter_intro();
 });
