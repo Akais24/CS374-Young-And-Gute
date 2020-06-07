@@ -14,7 +14,8 @@ function set_intro() {
 
     $("#intro_start_btn").click(async function () {
 		await fadeOutComponentById("intro");
-        await start_question();
+		await fadeInComponentById("question");
+		newQ(getNextQuestionAndImages(undefined, undefined));
     });
 }
 
@@ -53,11 +54,6 @@ function enter_result() {
 
 function slide(){
     $("#question").animate({marginTop:"0%"},1000);
-}
-
-async function start_question() {
-	fadeInComponentById("question");
-    newQ(getNextQuestionAndImages(undefined, undefined));
 }
 
 let actimg = 0;
