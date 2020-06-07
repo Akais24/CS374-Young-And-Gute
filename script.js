@@ -34,18 +34,16 @@ function set_fail() {
 	$("#fail_go_intro").click(async function () {
 		reset_algorithm();
 		reset_query();
-		history = [];
 
         await exit_fail();
         await enter_intro();
 	});
 	
 	$(".fail_back_button").click(async function () {
-		undoAnswer();
 		reset_query();
 		await exit_fail();
 		await enter_question();
-        newQ(history.pop());
+        newQ(undoAnswer());
     });
 }
 
@@ -86,7 +84,6 @@ async function start_question() {
     newQ(getNextQuestionAndImages(undefined, undefined));
 }
 
-let history = [];
 let actimg = 0;
 let firstpage = 1;
 
@@ -126,7 +123,6 @@ async function newQ(qni){
 	
 			var b = $('<button type="button" class="btn btn-default">').text(choices[i]).data("idx", i);
 			b.click(function(){
-				history.push(qni);
 				var idx = $(this).data("idx");
 				var next = getNextQuestionAndImages(idx, undefined);
 				newQ(next);
@@ -194,14 +190,14 @@ async function newQ(qni){
 }
 
 $(".back_button").click(async function(){
-    undoAnswer();
-    if (history.length === 0) {
-        reset_query();
+	const prevQni = undoAnswer();
+	if (prevQni === undefined) {
         await exit_question();
+        reset_query();
         await enter_intro();
-    } else {
-        newQ(history.pop());
-    }
+	} else {
+		newQ(prevQni);
+	}
 });
 
 function putimage(img_ind, img_url){

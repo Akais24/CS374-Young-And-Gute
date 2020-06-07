@@ -34,11 +34,14 @@ function getNextQuestionAndImages(answerIndex, pId) {
 
     // user click answer
     answers.push({ questionIndex, answerIndex });
-    
+
+    return getNextData();
+}
+
+function getNextData() {
     let nextCandidates = [];
     for (product of products) {
         let score = 0;
-        if (product.pId > 5 || product.pId < 3) continue;
         for (answer of answers) {
             const possibleAnswers = product.questions[answer.questionIndex];
             if (possibleAnswers && possibleAnswers.indexOf(answer.answerIndex + 1) !== -1) {
@@ -74,7 +77,8 @@ function getNextQuestionAndImages(answerIndex, pId) {
     }
 
     let nextQuestion = undefined;
-    for (let i = questionIndex + 1; i < questions.length; i++) {
+    let lastQuestionIndex = answers.length === 0 ? -1 : answers[answers.length - 1].questionIndex;
+    for (let i = lastQuestionIndex + 1; i < questions.length; i++) {
         const question = questions[i];
 
         let candidatePossibleAnswers = [];
@@ -110,10 +114,12 @@ function getNextQuestionAndImages(answerIndex, pId) {
 
 function undoAnswer() {
     if (answers.length === 0) {
-        questionIndex = undefined
+        questionIndex = undefined;
+        return undefined;
     } else {
-        questionIndex = answers[answers.length - 1].questionIndex;
-        answers.splice(answers.length - 1, 1);
+        const lastAnswer = answers.pop();
+        questionIndex = lastAnswer.questionIndex;
+        return getNextData();
     }
 }
 
