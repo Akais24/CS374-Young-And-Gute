@@ -1,6 +1,5 @@
 const maxImageLimit = 8;
 
-
 let answers = [];
 let questionIndex = undefined;
 
@@ -116,6 +115,11 @@ function undoAnswer() {
         questionIndex = answers[answers.length - 1].questionIndex;
         answers.splice(answers.length - 1, 1);
     }
+}
+
+function reset_algorithm() {
+    answers = [];
+    questionIndex = undefined;
 }
 
 function extractDataFromProduct(p) {

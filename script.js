@@ -31,9 +31,21 @@ function exit_intro() {
 }
 
 function set_fail() {
-	$("#fail_back_intro").click(async function () {
+	$("#fail_go_intro").click(async function () {
+		reset_algorithm();
+		reset_query();
+		history = [];
+
         await exit_fail();
         await enter_intro();
+	});
+	
+	$(".fail_back_button").click(async function () {
+		undoAnswer();
+		reset_query();
+		await exit_fail();
+		await enter_question();
+        newQ(history.pop());
     });
 }
 
@@ -70,13 +82,11 @@ function slide(){
 }
 
 async function start_question() {
-    console.log("SQ");
     enter_question();
     newQ(getNextQuestionAndImages(undefined, undefined));
 }
 
 let history = [];
-let curQNI = undefined;
 let actimg = 0;
 let firstpage = 1;
 
