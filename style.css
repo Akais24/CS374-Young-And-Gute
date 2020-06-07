@@ -115,7 +115,7 @@ nav{
 
 /* style for fail page */
 #fail {
-    width: 800px;
+    width: 1200px;
     height: 100%;
     margin: auto;
     background-color: var(--main_color);
@@ -126,6 +126,7 @@ nav{
     height: 550px;
     padding: 100px;
     padding-bottom: 50px;
+    margin: auto;
 }
 
 .fail_image {
@@ -136,6 +137,7 @@ nav{
 
 #fail_text {
     margin: auto;
+    text-align: center;
 }
 
 #fail_text_main {
@@ -146,29 +148,35 @@ nav{
     font-size: 20px;
 }
 
-#fail_button {
+#fail_button button{
     margin-top: 60px;
-}
-
-/* style for question page */
-.question_bg{
-    background-color: #FAF1E4;
-    width:1200px;
-    height: 100%;
     position: absolute;
     left: 50%;
     transform: translate(-50%, 0%);
 }
 
+/* style for question page */
+#question{
+    width: 1200px;
+    margin: 0 auto;
+    height: 100%;
+}
+
+.question_bg{
+    background-color: #FAF1E4;
+    width: 1200px;
+    height: 100%;
+    
+}
+
 .candidate_bg{
 	background-color: #FFF5F0;
-	width:1200px;
+	width: 1200px;
 	height: 50%;
 	position: absolute;
 	left: 50%;
-	top: 60%;
+	top: 50%;
 	transform: translate(-50%, 0%);
-
 }
 
 .back_button{
@@ -180,7 +188,7 @@ nav{
 }
 
 .question{
-    width: 840px;
+    width: 1200px;
     margin: 0 auto;
     text-align: center;
     font-size: 40px;
