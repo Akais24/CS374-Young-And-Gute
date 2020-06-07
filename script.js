@@ -1,24 +1,25 @@
 const fadeTime = 500;
 
+function set_intro() {
+    const introImages = getIntroImages();
+    for (let i = 0; i < introImages.length; i++) {
+        const sampleImageItem = `
+            <li class="intro_examples_image_li">
+                <img src="${introImages[i].mainImage}" class="intro_examples_image_src">
+                <div>${introImages[i].name}</div>
+            </li>`;
+        
+        $(".intro_examples_image_ul").append(sampleImageItem);
+    }
+
+    $("#intro_start_btn").click(async function () {
+        await exit_intro();
+        await start_question();
+    });
+}
+
 function enter_intro() {
     return new Promise((resolve, reject) => {
-        const introImages = getIntroImages();
-
-        for (let i = 0; i < introImages.length; i++) {
-            const sampleImageItem = `
-                <li class="intro_examples_image_li">
-                    <img src="${introImages[i].mainImage}" class="intro_examples_image_src">
-                    <div>${introImages[i].name}</div>
-                </li>`;
-            
-            $(".intro_examples_image_ul").append(sampleImageItem);
-        }
-    
-        $("#intro_start_btn").click(async function () {
-            await exit_intro();
-            await start_question();
-        });
-
         $("#intro").fadeIn(fadeTime, resolve);
     });
 }
@@ -66,6 +67,7 @@ async function start_question() {
     enter_question();
     newQ(getNextQuestionAndImages(undefined, undefined));
 }
+
 let history = [];
 let curQNI = undefined;
 let actimg = 0;
@@ -73,12 +75,21 @@ let firstpage = 1;
 
 let imgpnt = [-1,-1,-1,-1,-1,-1,-1,-1,-1];
 
-function fin(){
-    $(".query").fadeIn();
+function reset_query() {
+    $(".question").empty();
+    $(".choices").empty();
 }
 
-function fout(fun){
-    $(".query").fadeOut(fun);
+function hide_query() {
+    return new Promise((resolve, reject) => {
+        $(".query").fadeOut(fadeTime, resolve);
+    });
+}
+
+function show_query() {
+    return new Promise((resolve, reject) => {
+        $(".query").fadeIn(fadeTime, resolve);
+    });
 }
 
 async function newQ(qni){
@@ -87,33 +98,31 @@ async function newQ(qni){
         await enter_fail();
         return;
     }
+
+    await hide_query();
+
+    // set next query
+    reset_query();
+    var query = qni.question;
+
+    $(".question").text(query["question"]);
+
+    var choices = query["answers"];
+    for(var i=0; i<query["answers"].length; i++){
+
+        var b = $('<button type="button" class="btn btn-default">').text(choices[i]).data("idx", i);
+        b.click(function(){
+            history.push(qni);
+            var idx = $(this).data("idx");
+            var next = getNextQuestionAndImages(idx, undefined);
+            newQ(next);
+        })
+        $(".choices").append(b);
+    }
     
-    fout(function(){
-        var curQNI = qni;
-        var query = qni.question;	
-        questionIndex = query["qId"];
-
-        $(".question").text(query["question"]);
-		$(".choices").empty();
-		
-        var choices = query["answers"];
-        for(var i=0; i<choices.length; i++){
-
-            var b = $('<button type="button" class="btn btn-default">').text(choices[i]).data("idx", i);
-            b.click(function(){
-                history.push(curQNI);
-                var idx = $(this).data("idx");
-                var next = getNextQuestionAndImages(idx, undefined);
-                newQ(next);
-            })
-            $(".choices").append(b);
-        }
-    }); 
-    fin();
+    show_query();
 
 	var curimgs = qni.images;
-
-
 
 	for(var i=1 ; i<=8 ; i++){
 
@@ -169,9 +178,15 @@ async function newQ(qni){
 	setTimeout(function(){alignimgs(actimg);}, 500);
 }
 
-$(".back_button").click(function(){
-    // var newQuery = questions.find(p => p.qId == questionIndex-1);
-    newQ(history.pop());
+$(".back_button").click(async function(){
+    undoAnswer();
+    if (history.length === 0) {
+        reset_query();
+        await exit_question();
+        await enter_intro();
+    } else {
+        newQ(history.pop());
+    }
 });
 
 function putimage(img_ind, img_url){
@@ -364,6 +379,8 @@ $("#image8").fadeToggle(1000);
 $("#intro").hide();
 $("#fail").hide();
 $("#question").hide();
+
+set_intro();
 
 $(document).ready(async function() {
     alignimgs(8);
