@@ -1,7 +1,7 @@
 const maxImageLimit = 8;
 
 
-let answers = []
+let answers = [];
 let questionIndex = undefined;
 
 // Input : aId(Number), pId(Number)
@@ -106,6 +106,15 @@ function getNextQuestionAndImages(answerIndex, pId) {
     return {
         question: nextQuestion,
         images: nextImages.map(i => i.product).map(extractDataFromProduct),
+    }
+}
+
+function undoAnswer() {
+    if (answers.length === 0) {
+        questionIndex = undefined
+    } else {
+        questionIndex = answers[answers.length - 1].questionIndex;
+        answers.splice(answers.length - 1, 1);
     }
 }
 
