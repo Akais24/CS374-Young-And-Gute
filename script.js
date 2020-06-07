@@ -30,6 +30,13 @@ function exit_intro() {
     })
 }
 
+function set_fail() {
+	$("#fail_back_intro").click(async function () {
+        await exit_fail();
+        await enter_intro();
+    });
+}
+
 function enter_fail() {
     return new Promise((resolve, reject) => {
         $("#fail").fadeIn(fadeTime, resolve);
@@ -380,6 +387,7 @@ reset_query();
 $("#question").hide();
 
 set_intro();
+set_fail();
 
 $(document).ready(async function() {
     alignimgs(8);
