@@ -80,10 +80,8 @@ function reset_query() {
     $(".choices").empty();
 }
 
-function hide_query() {
-    return new Promise((resolve, reject) => {
-        $(".query").fadeOut(fadeTime, resolve);
-    });
+function hide_query(callback) {
+	return  $(".query").fadeOut(fadeTime, callback);
 }
 
 function show_query() {
@@ -99,28 +97,28 @@ async function newQ(qni){
         return;
     }
 
-    await hide_query();
-
-    // set next query
-    reset_query();
-    var query = qni.question;
-
-    $(".question").text(query["question"]);
-
-    var choices = query["answers"];
-    for(var i=0; i<query["answers"].length; i++){
-
-        var b = $('<button type="button" class="btn btn-default">').text(choices[i]).data("idx", i);
-        b.click(function(){
-            history.push(qni);
-            var idx = $(this).data("idx");
-            var next = getNextQuestionAndImages(idx, undefined);
-            newQ(next);
-        })
-        $(".choices").append(b);
-    }
-    
-    show_query();
+    hide_query(async function() {
+		reset_query();
+		// set next query
+		var query = qni.question;
+	
+		$(".question").text(query["question"]);
+	
+		var choices = query["answers"];
+		for(var i=0; i<query["answers"].length; i++){
+	
+			var b = $('<button type="button" class="btn btn-default">').text(choices[i]).data("idx", i);
+			b.click(function(){
+				history.push(qni);
+				var idx = $(this).data("idx");
+				var next = getNextQuestionAndImages(idx, undefined);
+				newQ(next);
+			})
+			$(".choices").append(b);
+		}
+		
+		show_query();
+	});
 
 	var curimgs = qni.images;
 
@@ -378,6 +376,7 @@ $("#image8").fadeToggle(1000);
 // hide all component
 $("#intro").hide();
 $("#fail").hide();
+reset_query();
 $("#question").hide();
 
 set_intro();
