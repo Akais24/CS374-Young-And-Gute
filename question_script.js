@@ -22,17 +22,15 @@ function fout(fun){
 }
 
 function newQ(qni){
-    console.log('newQ');
     fout(function(){
         var curQNI = qni;
         var query = qni.question;	
         questionIndex = query["qId"];
-        console.log(questionIndex);
         $(".question").text(query["question"]);
-        $(".choices").empty();
+		$(".choices").empty();
+		
         var choices = query["answers"];
         for(var i=0; i<choices.length; i++){
-            console.log(choices[i]);
             var b = $('<button type="button" class="btn btn-default">').text(choices[i]).data("idx", i);
             b.click(function(){
                 history.push(curQNI);
@@ -46,7 +44,6 @@ function newQ(qni){
     fin();
 
 	var curimgs = qni.images;
-        console.log(curimgs);
 
 
 	for(var i=1 ; i<=8 ; i++){
@@ -67,8 +64,6 @@ function newQ(qni){
 		}
 
 	}
-
-	console.log(imgpnt);
 
 
 	for(img of curimgs){
@@ -95,8 +90,7 @@ function newQ(qni){
 		}
 
 	}
-	console.log(imgpnt);
-        console.log(actimg);
+	
 	setTimeout(function(){alignimgs(actimg);}, 1000);
 }
 
