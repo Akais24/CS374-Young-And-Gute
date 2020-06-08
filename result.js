@@ -1,7 +1,5 @@
 var yes_button;
 var no_button;
-var product_name;
-
 
 var fadeElements =[
     "#result_middle",
@@ -9,24 +7,47 @@ var fadeElements =[
     "#result_bottom img"
 ];
 
-var imgSource_test =[
-    "./images/1.jpg",
-    "./images/2.jpg",
-    "./images/3.jpg",
-    "./images/4.jpg"
-];
-
-var test_product_name = "Macrame"
-
 function test_enter(){
     setProductImg(imgSource_test[2]);
     setCandidatesImg(imgSource_test);
     setProductname("Pokemon");
-    enter_animation();
+    resultEnterAnimation();
 }
 function test_quit(){
-    quit_animation();
+    resultQuitAnimation();
 }
+
+
+function gotoResFromQuestion(pId) {
+	var product = products.find(e=>e.pId==pId);
+	if(document.getElementById("result").style.display=="none"){
+		fadeInComponentById("result");
+	}
+    setProductImg(product.mainImage);
+    setCandidatesImg(product.images);
+	setProductname(product.name);
+	setNobutton(pId);
+	if(document.getElementById("result").style.marginTop!="0%"){
+		resultEnterAnimation();
+	}
+	else {
+		hideObjects();
+		fadeInResultElements();
+	}
+}
+
+function gotoResFromImage(pId) {
+	var product = products.find(e=>e.pId==pId);
+    fadeInComponentById("result");
+    setProductImg(product.mainImage);
+    setCandidatesImg(product.images);
+	setProductname(product.name);
+	setBackbutton();
+    resultEnterAnimation();
+}
+
+
+
 
 function setNobutton(pId){
     $("#result_back").hide();
@@ -34,14 +55,13 @@ function setNobutton(pId){
     $("#result_no").click(function(){
         const nextQni = getNextQuestionAndImages(undefined, undefined, pId);
         if(nextQni.pId !== undefined){ // next also result
-            fadeOutElements();
+            fadeOutResultElements();
             newQ(nextQni);
         }
         else{ // next is question
             newQ(nextQni);
-            quit_animation();
+            resultQuitAnimation();
         }
-        
     })
 }
 
@@ -51,10 +71,8 @@ function setBackbutton(){
 }
 
 function setProductname(name){
-    product_name = name;
-
-    document.querySelector("#product_text").innerHTML=product_name;
-    document.querySelector("#result_bottom p").innerHTML="Other images of "+ product_name;
+    document.querySelector("#product_text").innerHTML=name;
+    document.querySelector("#result_bottom p").innerHTML="Other images of "+ name;
 
     var nameuri = encodeURI(name)
     var buylink = "https://search.shopping.naver.com/search/all?query="+nameuri+"&frm=NVSHATC"
@@ -80,7 +98,7 @@ function hideObjects(){
     });
 }
 
-function enter_animation(){
+function resultEnterAnimation(){
     hideObjects();
     var elem = document.getElementById("result");
     var pos = 100;
@@ -88,7 +106,7 @@ function enter_animation(){
     function frame(){
         if (pos==0){
             clearInterval(id);
-            fadeInElements();
+            fadeInResultElements();
         }
         else {
             pos--;
@@ -97,11 +115,11 @@ function enter_animation(){
     }
 }
 
-function quit_animation(){
-    fadeOutElements();
-    setTimeout(do_quit_animation,fadeElements.length*200+200);
+function resultQuitAnimation(){
+    fadeOutResultElements();
+    setTimeout(doQuitAnimation,fadeElements.length*200+200);
 }
-function do_quit_animation(){
+function doQuitAnimation(){
     var elem = document.getElementById("result");
     var pos = 0;
     var id = setInterval(frame,5);
@@ -116,12 +134,12 @@ function do_quit_animation(){
     }
 }
 
-function fadeInElements(){
+function fadeInResultElements(){
     fadeElements.forEach(function(element,index,array) {
         $(element).delay(index*200).fadeIn();
     });
 }
-function fadeOutElements(){
+function fadeOutResultElements(){
     fadeElements.reverse();
     fadeElements.forEach(function(element,index,array) {
         $(element).delay(index*200).fadeOut();
