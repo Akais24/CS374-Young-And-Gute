@@ -359,7 +359,7 @@ function alignimgs(number){
 
 }
 
-for (let i = 1; i < 8; i++) {
+for (let i = 1; i <= 8; i++) {
 	$(`#div${i}`).click(function() {
 		const pId = imgpnt[i];
 		getNextQuestionAndImages(undefined, pId, undefined);
