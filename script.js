@@ -68,7 +68,6 @@ function slide(){
     $("#question").animate({marginTop:"0%"},1000);
 }
 
-let actimg = 0;
 let firstpage = 1;
 
 let imgpnt = [-1,-1,-1,-1,-1,-1,-1,-1,-1];
@@ -126,31 +125,32 @@ async function newQ(qni){
 	});
 
 	var curimgs = qni.images;
+	const nextPIds = curimgs.map(img => img.pId)
 
 	const disappearPromises = []
 	for (let i = 1; i <= 8; i++) {
-		if(imgpnt[i] == -1)
-			continue;
+		// already disabled
+		if(imgpnt[i] == -1) continue;
 			
-		const isExist = curimgs.find(img => imgpnt[i] == img.pId) !== undefined;
-		if (isExist) {
-			continue;
-		}
+		const isExist = nextPIds.includes(imgpnt[i]);
+		// remain
+		if (isExist) continue
 		
+		// not remain => should disappear
 		const disappearPromise = new Promise((resolve, reject) => {
-			var wrongdiv = document.getElementById("wrongdiv"+i);
-			$(wrongdiv).show();
+			// var wrongdiv = document.getElementById("wrongdiv"+i);
+
+			$("#wrongdiv"+i).show();
 			$("#div"+i).fadeOut(400, 
 				(
 					function() {
 						putimage(this,"images/image-placeholder.png");
+						imgpnt[i] = -1;
 						resolve();
 					}
 				).bind(i)
 			);
 			$("#wrongdiv"+i).fadeOut(500);
-			imgpnt[i]=-1;
-			actimg--;
 		});
 
 		disappearPromises.push(disappearPromise);
@@ -159,28 +159,37 @@ async function newQ(qni){
 	// hide incorrect 
 	await Promise.all(disappearPromises);
 
+	// get appear pIds
+	const appearPIds = [];
+	for (const newPId of nextPIds) {
+		// already in view
+		if (imgpnt.includes(newPId)) continue;
+
+		// really new img
+		appearPIds.push(newPId);
+
+		// assign the position
+		const index = imgpnt.indexOf(-1, 1);
+		imgpnt[index] = newPId;
+	}
+
+	// move image divs based on imgpnt
+	await alignimgs(curimgs.length);
+
 	// appear images
 	for (const img of curimgs) {
-		if(actimg == 8)
-			break;
-		
-		const isExist = imgpnt.includes(img.pId);
+		const isAppear = appearPIds.includes(img.pId);
 
-		if (!isExist) {
+		if (isAppear) {
 			for (let j = 1; j <= 8; j++) {
-				if(imgpnt[j] == -1){
+				if(imgpnt[j] == img.pId){
 					putImageAndFadeIn(document.getElementById("div"+j), j, img.mainImage);
-					imgpnt[j] = img.pId;
-					actimg++;
 					break;
 				}
 
 			}
 		}
 	}
-
-	// move image
-	alignimgs(actimg);
 }
 
 async function putImageAndFadeIn(div, j, mainImage) {
@@ -206,158 +215,76 @@ function putimage(img_ind, img_url){
 }
 
 
-function alignimgs(number){
+function alignimgs(number) {
+	return new Promise(async (resolve, reject) => {
+		const promises = [];
 
-	var j=0;
+		let j = 0;
+		for (let i = 1; i <= 8; i++) {
+			if (imgpnt[i] !== -1) {
+				// calculate position
+				let down, right;
+				switch (number) {
+					case 1:
+						down = 50;
+						right = 50;
+						break;
+					case 2:
+						down = 50;
+						right = j*50+25;
+						break;
+					case 3:
+						down = parseInt((j+1)/2)*50+25;
+						right =((j+1)%2)*50+25;
+						if(parseInt((j+1)/2) == 0)
+							right = 50;
+						break;
+					case 4:
+						down = parseInt(j/2)*50+25;
+						right =(j%2)*50+25;
+						break;
+					case 5:
+						down = parseInt((j+1)/3)*50+25;
+						right =((j+1)%3)*25+25;
+						if(parseInt((j+1)/3) == 0)
+							right = (j%3)*25+37.5;
+						break;
+					case 6:
+						down = parseInt(j/3)*50+25;
+						right =(j%3)*25+25;
+						break;
+					case 7:
+						down = parseInt((j+1)/4)*50+25;
+						right =((j+1)%4)*25+12.5;
+						if(parseInt((j+1)/4) == 0)
+							right = (j%4)*25+25;
+						break;
+					case 8:
+						down = (parseInt((i-1)/4))*50+25;
+						right = ((i-1)%4)*25+12.5;
+						break;
+				}
 
-	if(number == 1){
-		for(var i=1 ; i<= 8 ; i++){
-			
-			if(imgpnt[i]!=-1){
-				var down = 50;
-				var right = 50;
-				var div = document.getElementById("div"+i);
-				var wrongdiv = document.getElementById("wrongdiv"+i);
-				$(wrongdiv).animate({left: right +"%",top: down +"%"}, 500);
-				$(div).animate({left: right +"%",top: down +"%"}, 500);
-				//div.style.top = down +"%";
-				//div.style.left = right +"%";
-				div.style.transform = "translate(-50%, -50%)";
+				// set animation
+				const div = document.getElementById("div"+i);
+				const wrongdiv = document.getElementById("wrongdiv"+i);
+
+				const property = { left: right +"%",top: down +"%" };
+
+				promises.push(new Promise((resolve, reject) => {
+					$(wrongdiv).animate(property, 500, "swing", resolve);
+				}));
+				promises.push(new Promise((resolve, reject) => {
+					$(div).animate(property, 500, "swing", resolve);
+				}));
+
 				j++;
 			}
 		}
-	}
 
-	if(number == 2){
-		for(var i=1 ; i<= 8 ; i++){
-			
-			if(imgpnt[i]!=-1){
-				var div = document.getElementById("div"+i);
-				var down = 50;
-				var right = j*50+25;
-				var wrongdiv = document.getElementById("wrongdiv"+i);
-				$(wrongdiv).animate({left: right +"%",top: down +"%"}, 500);
-				$(div).animate({left: right +"%",top: down +"%"}, 500);
-				//$(div).animate({top: down +"%"}, 500);
-				//div.style.top = down +"%";
-				//div.style.left = right +"%";
-				div.style.transform = "translate(-50%, -50%)";
-				j++;
-			}
-		}
-	}
-
-	if(number == 3){
-		for(var i=1 ; i<= 8 ; i++){
-			
-			if(imgpnt[i]!=-1){
-				var down = parseInt((j+1)/2)*50+25;
-				var right =((j+1)%2)*50+25;
-				if(parseInt((j+1)/2) == 0)
-					right = 50;
-				var div = document.getElementById("div"+i);
-				var wrongdiv = document.getElementById("wrongdiv"+i);
-				$(wrongdiv).animate({left: right +"%",top: down +"%"}, 500);
-				$(div).animate({left: right +"%",top: down +"%"}, 500);
-				//div.style.top = down +"%";
-				//div.style.left = right +"%";
-				div.style.transform = "translate(-50%, -50%)";
-				j++;
-			}
-		}
-	}
-
-	if(number == 4){
-		for(var i=1 ; i<= 8 ; i++){
-			
-			if(imgpnt[i]!=-1){
-				var down = parseInt(j/2)*50+25;
-				var right =(j%2)*50+25;
-				var div = document.getElementById("div"+i);
-				var wrongdiv = document.getElementById("wrongdiv"+i);
-				$(wrongdiv).animate({left: right +"%",top: down +"%"}, 500);
-				$(div).animate({left: right +"%",top: down +"%"}, 500);
-				//div.style.top = down +"%";
-				//div.style.left = right +"%";
-				div.style.transform = "translate(-50%, -50%)";
-				j++;
-			}
-		}
-	}
-
-	if(number == 5){
-		for(var i=1 ; i<= 8 ; i++){
-			
-			if(imgpnt[i]!=-1){
-				var down = parseInt((j+1)/3)*50+25;
-				var right =((j+1)%3)*25+25;
-				if(parseInt((j+1)/3) == 0)
-					right = (j%3)*25+37.5;
-				var div = document.getElementById("div"+i);
-				var wrongdiv = document.getElementById("wrongdiv"+i);
-				$(wrongdiv).animate({left: right +"%",top: down +"%"}, 500);
-				$(div).animate({left: right +"%",top: down +"%"}, 500);
-				//div.style.top = down +"%";
-				//div.style.left = right +"%";
-				div.style.transform = "translate(-50%, -50%)";
-				j++;
-			}
-		}
-	}
-
-	if(number == 6){
-		for(var i=1 ; i<= 8 ; i++){
-			
-			if(imgpnt[i]!=-1){
-				var down = parseInt(j/3)*50+25;
-				var right =(j%3)*25+25;
-				var div = document.getElementById("div"+i);
-				var wrongdiv = document.getElementById("wrongdiv"+i);
-				$(wrongdiv).animate({left: right +"%",top: down +"%"}, 500);
-				$(div).animate({left: right +"%",top: down +"%"}, 500);
-				//div.style.top = down +"%";
-				//div.style.left = right +"%";
-				div.style.transform = "translate(-50%, -50%)";
-				j++;
-			}
-		}
-	}
-
-	if(number == 7){
-		for(var i=1 ; i<= 8 ; i++){
-			
-			if(imgpnt[i]!=-1){
-				var down = parseInt((j+1)/4)*50+25;
-				var right =((j+1)%4)*25+12.5;
-				if(parseInt((j+1)/4) == 0)
-					right = (j%4)*25+25;
-				var div = document.getElementById("div"+i);
-				var wrongdiv = document.getElementById("wrongdiv"+i);
-				$(wrongdiv).animate({left: right +"%",top: down +"%"}, 500);
-				$(div).animate({left: right +"%",top: down +"%"}, 500);
-				//div.style.top = down +"%";
-				//div.style.left = right +"%";
-				div.style.transform = "translate(-50%, -50%)";
-				j++;
-			}
-		}
-	}
-
-	if(number == 8){
-		for(var i=1 ; i<= 8 ; i++){
-			var down = (parseInt((i-1)/4))*50+25;
-			var right = ((i-1)%4)*25+12.5;
-			var div = document.getElementById("div"+i);
-			var wrongdiv = document.getElementById("wrongdiv"+i);
-			$(div).animate({left: right +"%",top: down +"%"}, 500);
-			$(wrongdiv).animate({left: right +"%",top: down +"%"}, 500);
-			//div.style.top = down +"%";
-			//div.style.left = right +"%";
-			div.style.transform = "translate(-50%, -50%)";
-
-		}
-	}
-
+		await Promise.all(promises);
+		resolve();
+	});
 }
 
 for (let i = 1; i <= 8; i++) {
@@ -441,8 +368,6 @@ function init_candidates(){
 			imgpnt[i]=-1;
 
 	}
-
-	actimg = 0;
 }
 
 // hide all component
