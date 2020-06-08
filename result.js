@@ -30,7 +30,8 @@ function test_quit(){
 
 function setNobutton(pId){
     $("#result_no").click(function(){
-        newQ(excludePidAndGetNextQuestionAndImages(pId));
+        const nextQni = getNextQuestionAndImages(undefined, undefined, pId);
+        newQ(nextQni);
         quit_animation();
     })
 }

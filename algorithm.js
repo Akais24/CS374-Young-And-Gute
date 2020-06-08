@@ -1,8 +1,7 @@
 const maxImageLimit = 8;
 
 let answers = [];
-let excludePids = [];
-let questionIndex = undefined;
+let currentQuestionIndex = undefined;
 
 // Input : aId(Number), pId(Number)
 // Output :
@@ -19,84 +18,108 @@ let questionIndex = undefined;
 //              }),
 //              images(Object List { pId(Number), name(String), mainImage(String) })
 //          }
-function getNextQuestionAndImages(answerIndex, pId) {
-    if (questionIndex === undefined) { // return first question
-        questionIndex = 0;
-        return {
-            question: questions[questionIndex],
-            images: products.slice(0, maxImageLimit).map(extractDataFromProduct)
-        }
-    }
-
-    // user click product
-    if (pId !== undefined) {
-        return products.find(p => p.pId === pId);
+function getNextQuestionAndImages(answerIndex, chosenPId, excludePId) {
+    if (currentQuestionIndex === undefined) {
+        currentQuestionIndex = 0;
+        
+        return getNextData();
     }
 
     // user click answer
-    answers.push({ questionIndex, answerIndex });
+    if (answerIndex !== undefined) {
+        answers.push({ questionIndex: currentQuestionIndex, answerIndex });
+    }
+    // user click product
+    else if (chosenPId !== undefined) {
+        return products.find(p => p.pId === chosenPId);
+    }
+    // user click no on result page
+    else if (excludePId !== undefined) {
+        answers.push({ excludePId });
+    }
 
     return getNextData();
 }
 
 function getNextData() {
-    let nextCandidates = [];
-    for (product of products) {
-        if (excludePids.includes(product.pId)) {
-            continue;
+    // if it's beginning
+    if (answers.length === 0) {
+        return {
+            question: questions[currentQuestionIndex],
+            images: products.slice(0, maxImageLimit)
+                .map(extractDataFromProduct),
         }
+    }
+
+    const excludePIds = answers.filter(a => a.excludePId !== undefined).map(a => a.excludePId);
+    const qAnswers = answers.filter(a => a.excludePId === undefined);
+
+    const leftProducts = products.filter(p => !excludePIds.includes(p.pId));
+
+    // if nothing left, return undefined(fail)
+    if (leftProducts.length === 0) {
+        return undefined;
+    }
+    // if only one left, return it
+    else if (leftProducts.length === 1) {
+        return productScores[0].product;
+    }
+
+    // calculate score of products
+    const productScores = [];
+    for (const product of leftProducts) {
+        if (excludePIds.includes(product.pId)) continue;
 
         let score = 0;
-        for (answer of answers) {
-            const possibleAnswers = product.questions[answer.questionIndex];
-            if (possibleAnswers && possibleAnswers.indexOf(answer.answerIndex) !== -1) {
+        for (const answer of qAnswers) {
+            const productAnswers = product.questions[answer.questionIndex];
+            if (productAnswers && productAnswers.includes(answer.answerIndex)) {
                 score++;
             }
         }
-        nextCandidates.push({ product, score });
+
+        productScores.push({ product, score });
     }
 
-    const perfectCandidates = nextCandidates.filter(o => o.score === answers.length);
-
-    if (perfectCandidates.length === 1) {
-        return perfectCandidates[0].product;
+    // sort product by score
+    sortListByProperty(productScores, "score");
+    // if one product has unique highest score, return it
+    if (productScores[0].score != productScores[1].score) {
+        return productScores[0].product;
     }
-    else if (perfectCandidates.length == 0) {
-        const nearCandidates = nextCandidates.filter(o => o.score >= answers.length - 2);
-        if (nextCandidates.length === 1) {
-            return nextCandidates[0].product;
-        }
-        else if (nextCandidates.length === 0) {
-            return undefined;
-        }
-        nextCandidates = nearCandidates;
+    
+    const candidateProducts = productScores.filter(ps => ps.score > 0)
+        .map(ps => ps.product);
+    // if every product has 0 score, return fail
+    if (candidateProducts.length === 0) {
+        return undefined;
     }
-    else {
-        nextCandidates = perfectCandidates;
-    }
-    sortCandidatesByScore(nextCandidates);
 
     // calculate the next question
-    if (answers.length === questions.length) { // no more question
+    if (qAnswers.length === questions.length) {// no more question
         return undefined;
     }
 
     let nextQuestion = undefined;
-    let lastQuestionIndex = answers.length === 0 ? -1 : answers[answers.length - 1].questionIndex;
+    
+    let lastQuestionIndex = -1;
+    for (let i = qAnswers.length - 1; i >= 0; i--) {
+        if (qAnswers[i].questionIndex !== undefined) {
+            lastQuestionIndex = qAnswers[i].questionIndex;
+            break;
+        }
+    }
+
+
     for (let i = lastQuestionIndex + 1; i < questions.length; i++) {
-        const question = questions[i];
-
-        let candidatePossibleAnswers = [];
-        for (candidate of nextCandidates) {
-            const product = candidate.product;
-            const productPossibleAnswer = product.questions[i];
-
-            candidatePossibleAnswers.push(...productPossibleAnswer);
+        const candidateProductAnswers = [];
+        for (const product of candidateProducts) {
+            candidateProductAnswers.push(...product.questions[i]);
         }
 
-        candidatePossibleAnswers = Array.from(new Set(candidatePossibleAnswers));
-        if (candidatePossibleAnswers.length > 1) {
-            nextQuestion = question;
+        const candidateProductAnswersNum = Array.from(new Set(candidateProductAnswers)).length;
+        if (candidateProductAnswersNum > 1) {
+            nextQuestion = questions[i];
             break;
         }
     }
@@ -104,57 +127,59 @@ function getNextData() {
     if (nextQuestion === undefined) {
         return undefined;
     }
-    questionIndex = nextQuestion.qId;
 
-    let nextImages = nextCandidates.slice(0, maxImageLimit);
-    if (nextImages.length % 2 == 1) {
-        nextImages = nextImages.slice(0, nextImages.length - 1);
-    }
+    // set question index and return
+    currentQuestionIndex = nextQuestion.qId;
+
+    // filter nextImages with even number
+    const shownProductNum = Math.min(maxImageLimit, candidateProducts.length);
+
+    let shownProductImages = candidateProducts.slice(0, shownProductNum)
+        .map(extractDataFromProduct);
 
     return {
         question: nextQuestion,
-        images: nextImages.map(i => i.product).map(extractDataFromProduct),
+        images: shownProductImages,
     }
 }
 
 function undoAnswer() {
     if (answers.length === 0) {
-        questionIndex = undefined;
+        currentQuestionIndex = undefined;
         return undefined;
     } else {
         const lastAnswer = answers.pop();
-        questionIndex = lastAnswer.questionIndex;
+        // if last action is answering question
+        if (lastAnswer.questionIndex !== undefined) {
+            currentQuestionIndex = lastAnswer.questionIndex;
+        }
         return getNextData();
     }
 }
 
-function excludePidAndGetNextQuestionAndImages(pId) {
-    excludePids.push(pId);
-    return getNextData();
-}
-
 function reset_algorithm() {
     answers = [];
-    excludePids = [];
-    questionIndex = undefined;
-}
-
-function extractDataFromProduct(p) {
-    return {
-        pId: p.pId,
-        name: p.pId,
-        mainImage: p.mainImage,
-    }
-}
-
-function sortCandidatesByScore(l) {
-    l.sort(function (a, b) {
-        return b.score - a.score;
-    });
+    currentQuestionIndex = undefined;
 }
 
 const introImageLimit = 5;
 
 function getIntroImages() {
     return products.slice(0, introImageLimit);
+}
+
+//////////////////////////////////////////////////////////////////////////////
+
+function sortListByProperty(l, p) {
+    l.sort(function (a, b) {
+        return b[p] - a[p];
+    });
+}
+
+function extractDataFromProduct(p) {
+    return {
+        pId: p.pId,
+        name: p.name,
+        mainImage: p.mainImage,
+    }
 }

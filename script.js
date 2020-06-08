@@ -17,7 +17,9 @@ function set_intro() {
     		init_candidates();
 		await fadeOutComponentById("intro");
 		await fadeInComponentById("question");
-		newQ(getNextQuestionAndImages(undefined, undefined));
+		
+		const introQni = getNextQuestionAndImages(undefined, undefined, undefined);
+		newQ(introQni);
     });
 }
 
@@ -30,7 +32,7 @@ function set_fail() {
 		await fadeInComponentById("intro");
 	});
 	
-	$(".fail_back_button").click(async function () {
+	$("#fail .back_button").click(async function () {
 		reset_query();
 		await fadeOutComponentById("fail");
 		await fadeInComponentById("question");
@@ -114,8 +116,8 @@ async function newQ(qni){
 			var b = $('<button type="button" class="btn btn-default">').text(choices[i]).data("idx", i);
 			b.click(function(){
 				var idx = $(this).data("idx");
-				var next = getNextQuestionAndImages(idx, undefined);
-				newQ(next);
+				var nextQni = getNextQuestionAndImages(idx, undefined, undefined);
+				newQ(nextQni);
 			})
 			$(".choices").append(b);
 		}
