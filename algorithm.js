@@ -24,7 +24,7 @@ function getNextQuestionAndImages(answerIndex, pId) {
         questionIndex = 0;
         return {
             question: questions[questionIndex],
-            images: products.slice(0, maxImageLimit).map(extractDataFromProduct)
+            images: getRandomProducts(maxImageLimit).map(extractDataFromProduct)
         }
     }
 
@@ -156,5 +156,16 @@ function sortCandidatesByScore(l) {
 const introImageLimit = 5;
 
 function getIntroImages() {
-    return products.slice(0, introImageLimit);
+    return getRandomProducts(introImageLimit);
+}
+
+function getRandomProducts(num){
+    var arr = [];
+    while(arr.length < num){
+        var p = products[Math.floor(Math.random()*products.length)];
+        if(!arr.includes(p)){
+            arr.push(p);
+        }
+    }
+    return arr;
 }
