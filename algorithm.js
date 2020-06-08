@@ -46,7 +46,7 @@ function getNextData() {
     if (answers.length === 0) {
         return {
             question: questions[currentQuestionIndex],
-            images: products.slice(0, maxImageLimit)
+            images: getRandomProducts(maxImageLimit)
                 .map(extractDataFromProduct),
         }
     }
@@ -165,7 +165,7 @@ function reset_algorithm() {
 const introImageLimit = 5;
 
 function getIntroImages() {
-    return products.slice(0, introImageLimit);
+    return getRandomProducts(introImageLimit);
 }
 
 //////////////////////////////////////////////////////////////////////////////
@@ -182,4 +182,15 @@ function extractDataFromProduct(p) {
         name: p.name,
         mainImage: p.mainImage,
     }
+}
+
+function getRandomProducts(num){
+    var arr = [];
+    while(arr.length < num){
+        var p = products[Math.floor(Math.random()*products.length)];
+        if(!arr.includes(p)){
+            arr.push(p);
+        }
+    }
+    return arr;
 }
