@@ -163,7 +163,7 @@ async function newQ(qni){
 	setTimeout(function(){alignimgs(actimg);}, 500);
 }
 
-$(".back_button").click(async function(){
+$("#question .back_button").click(async function(){
 	const prevQni = undoAnswer();
 	if (prevQni === undefined) {
 		await fadeOutComponentById("question");
