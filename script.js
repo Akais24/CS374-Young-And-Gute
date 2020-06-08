@@ -12,7 +12,9 @@ function set_intro() {
         $(".intro_examples_image_ul").append(sampleImageItem);
     }
 
+
     $("#intro_start_btn").click(async function () {
+    		init_candidates();
 		await fadeOutComponentById("intro");
 		await fadeInComponentById("question");
 		newQ(getNextQuestionAndImages(undefined, undefined));
@@ -144,9 +146,9 @@ async function newQ(qni){
 		if(check == 0){
 			for(var j=1 ; j<=8 ; j++){
 				if(imgpnt[j]==-1){
-					//putimage(j,img.mainImage);
+					putimage(j,img.mainImage);
 					//putimage(j,"1.jpg");
-					putimage(j, "https://drive.google.com/uc?export=view&id=1gpnnJUARu5uA3Q11osy5dwHf9HSi13Ok");
+					//putimage(j, "https://drive.google.com/uc?export=view&id=1gpnnJUARu5uA3Q11osy5dwHf9HSi13Ok");
 					setTimeout(function(div){$(div).fadeIn();}, 500, document.getElementById("div"+j));
 					imgpnt[j]=img.pId;
 					actimg++;
@@ -382,6 +384,31 @@ $("#div8").click(function() {
 function gotoRes(imgnum, pId){
 	console.log(imgnum);
 	console.log(pId);
+}
+
+function init_candidates(){
+
+	for(var i=1 ; i<= 8 ; i++){
+		var down = (parseInt((i-1)/4))*50+25;
+		var right = ((i-1)%4)*25+12.5;
+		var div = document.getElementById("div"+i);
+		var wrongdiv = document.getElementById("wrongdiv"+i);
+		$(div).animate({left: right +"%",top: down +"%"}, 1);
+		$(wrongdiv).animate({left: right +"%",top: down +"%"}, 1);
+		//div.style.top = down +"%";
+		//div.style.left = right +"%";
+		div.style.transform = "translate(-50%, -50%)";
+
+	}
+
+	for(var i=1 ; i<=8 ; i++){
+
+			$("#div"+i).hide();
+			imgpnt[i]=-1;
+
+	}
+
+	actimg = 0;
 }
 
 // hide all component
