@@ -9,6 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
     <script src="./data/products.js"></script>
     <script src="./data/questions.js"></script>
+    <script src="./result.js"></script>
     <script src="./algorithm.js"></script>
 </head>
 
@@ -55,6 +56,42 @@
             </div>
             <div id="fail_button">
                 <button id="fail_go_intro" type="button" class="btn-custom">Back To Home</button>
+            </div>
+        </div>
+
+        <!-- div for result page -->
+        <div id="result">
+            <img class="back_button" src = "./images/icon.png">
+            <div id ="result_middle" class="wrapper w100 h60">
+                    <div class = "center_align content w50">
+                        <div class = "wrapper">
+                            <div class = "bold30 content">
+                                <img id="product_img" src = "../images/image-placeholder.png">
+                                <p id = "product_text"> Product name</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class = "center_align content w50">
+                        <div class = "wrapper">
+                            <div class = "bold30 content">
+                                <p> Is this what you thought? </p>
+                            </br>
+                                <button class="answer_button" id = "result_yes">YES! (Go to buy page)</button>
+                                <button class="answer_button" id = "result_no">No.. (Keep answering)</button>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+            <div id="result_bottom">
+                <div class="wrapper w100">
+                    <div class="normal20 left_align content">
+                            <p>Other images of "Macrame"</p>
+                            <img class = "alternative" src = "../images/image-placeholder.png">
+                            <img class = "alternative" src = "../images/image-placeholder.png">
+                            <img class = "alternative" src = "../images/image-placeholder.png">
+                            <img class = "alternative" src = "../images/image-placeholder.png">
+                    </div>
+                </div>
             </div>
         </div>
 

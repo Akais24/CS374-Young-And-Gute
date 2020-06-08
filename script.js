@@ -51,7 +51,15 @@ function fadeOutComponentById(componentId) {
 }
 
 function enter_result() {
-    $("#section").html('<object type="text/html" data="result/result.html" style="width:100%;height:100%;"></object>');
+    return new Promise((resolve, reject) => {
+        $("#result").fadeIn(fadeTime, resolve);
+    });
+}
+
+function exit_result() {
+    return new Promise((resolve, reject) => {
+        $("#result").fadeOut(fadeTime, resolve);
+    });
 }
 
 function slide(){
@@ -416,6 +424,7 @@ $("#intro").hide();
 $("#fail").hide();
 reset_query();
 $("#question").hide();
+$("#result").hide();
 
 set_intro();
 set_fail();
