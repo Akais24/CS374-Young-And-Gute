@@ -43,17 +43,16 @@ function getNextQuestionAndImages(answerIndex, chosenPId, excludePId) {
 }
 
 function getNextData() {
+    const excludePIds = answers.filter(a => a.excludePId !== undefined).map(a => a.excludePId);
+    const qAnswers = answers.filter(a => a.questionIndex !== undefined);
     // if it's beginning
-    if (answers.length === 0) {
+    if (qAnswers.length === 0) {
         return {
             question: questions[currentQuestionIndex],
             images: getRandomProducts(maxImageLimit)
                 .map(extractDataFromProduct),
         }
     }
-
-    const excludePIds = answers.filter(a => a.excludePId !== undefined).map(a => a.excludePId);
-    const qAnswers = answers.filter(a => a.questionIndex !== undefined);
 
     const leftProducts = products.filter(p => !excludePIds.includes(p.pId));
 
