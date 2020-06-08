@@ -98,7 +98,7 @@ async function newQ(qni){
 	
 	// go to result
 	if (qni.pId !== undefined) {
-		gotoRes(qni.pId);
+		gotoResFromQuestion(qni.pId);
 		return;
 	}
 
@@ -363,22 +363,57 @@ for (let i = 1; i <= 8; i++) {
 	$(`#div${i}`).click(function() {
 		const pId = imgpnt[i];
 		getNextQuestionAndImages(undefined, pId, undefined);
-		gotoRes(pId);
+		gotoResFromImage(pId);
 	});
 }
 
 $("#result .back_button").click(function(){
-	quit_animation();
-	newQ(undoAnswer());
+	var nextData = undoAnswer();
+	if(nextData.pId !== undefined){
+		newQ(nextData);
+	}
+	else {
+		quit_animation();
+		newQ(nextData);
+	}
 });
 
-function gotoRes(pId) {
+$("#result_back").click(function(){
+	var nextData = undoAnswer();
+	if(nextData.pId !== undefined){
+		newQ(nextData);
+	}
+	else {
+		quit_animation();
+		newQ(nextData);
+	}
+})
+
+function gotoResFromQuestion(pId) {
+	var product = products.find(e=>e.pId==pId);
+	if(document.getElementById("result").style.display=="none"){
+		enter_result();
+	}
+    setProductImg(product.mainImage);
+    setCandidatesImg(product.images);
+	setProductname(product.name);
+	setNobutton(pId);
+	if(document.getElementById("result").style.marginTop!="0%"){
+		enter_animation();
+	}
+	else {
+		hideObjects();
+		fadeInElements();
+	}
+}
+
+function gotoResFromImage(pId) {
 	var product = products.find(e=>e.pId==pId);
     enter_result();
     setProductImg(product.mainImage);
     setCandidatesImg(product.images);
 	setProductname(product.name);
-	setNobutton(pId);
+	setBackbutton();
     enter_animation();
 }
 
