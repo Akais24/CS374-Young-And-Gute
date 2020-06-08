@@ -127,65 +127,65 @@ async function newQ(qni){
 
 	var curimgs = qni.images;
 
-	for(var i=1 ; i<=8 ; i++){
-
-		if(imgpnt[i]==-1)
+	const disappearPromises = []
+	for (let i = 1; i <= 8; i++) {
+		if(imgpnt[i] == -1)
 			continue;
-		
-		var check = 0;
-		for(img of curimgs){
-			if(imgpnt[i]==img.pId)
-				check++;
+			
+		const isExist = curimgs.find(img => imgpnt[i] == img.pId) !== undefined;
+		if (isExist) {
+			continue;
 		}
 		
-		if(check == 0){
+		const disappearPromise = new Promise((resolve, reject) => {
 			var wrongdiv = document.getElementById("wrongdiv"+i);
 			$(wrongdiv).show();
-			$("#div"+i).fadeOut(400);
-			//$("#div"+i).fadeOut(400, (function(){putimage(this,"images/image-placeholder.png");}).bind(i));
+			$("#div"+i).fadeOut(400, 
+				(
+					function() {
+						putimage(this,"images/image-placeholder.png");
+						resolve();
+					}
+				).bind(i)
+			);
 			$("#wrongdiv"+i).fadeOut(500);
 			imgpnt[i]=-1;
 			actimg--;
-		}
+		});
 
+		disappearPromises.push(disappearPromise);
 	}
 
+	// hide incorrect 
+	await Promise.all(disappearPromises);
 
-
-	for(img of curimgs){
-		if(actimg ==8)
+	// appear images
+	for (const img of curimgs) {
+		if(actimg == 8)
 			break;
 		
-		var check = 0;
-		for(var i=1 ; i<=8 ; i++){
-			if(imgpnt[i]==img.pId)
-				check++
-		}
+		const isExist = imgpnt.includes(img.pId);
 
-		if(check == 0){
-			for(var j=1 ; j<=8 ; j++){
-				if(imgpnt[j]==-1){
-					//putimage(j,img.mainImage);
-					//putimage(j,"1.jpg");
-					//putimage(j, "https://drive.google.com/uc?export=view&id=1gpnnJUARu5uA3Q11osy5dwHf9HSi13Ok");
-					setTimeout(async function(div,j,mainImage){
-							await putimage(j,mainImage);
-							//console.log("start fadeIn"+j);
-							$(div).fadeIn(500);
-							//$("#image"+j).on('load',(function(){$(this).fadeIn(500);}).bind(div));
-							setTimeout(function(div){$(div).fadeIn(500);},50,div);
-					}, 500, document.getElementById("div"+j),j,img.mainImage);
-					imgpnt[j]=img.pId;
+		if (!isExist) {
+			for (let j = 1; j <= 8; j++) {
+				if(imgpnt[j] == -1){
+					putImageAndFadeIn(document.getElementById("div"+j), j, img.mainImage);
+					imgpnt[j] = img.pId;
 					actimg++;
 					break;
 				}
+
 			}
 		}
-
 	}
-	//console.log(imgpnt);
-        //console.log(actimg);
-	setTimeout(function(){alignimgs(actimg);}, 450);
+
+	// move image
+	alignimgs(actimg);
+}
+
+async function putImageAndFadeIn(div, j, mainImage) {
+	putimage(j, mainImage);
+	$(div).fadeIn(500);
 }
 
 $("#question .back_button").click(async function(){
@@ -199,7 +199,7 @@ $("#question .back_button").click(async function(){
 	}
 });
 
-async function putimage(img_ind, img_url){
+function putimage(img_ind, img_url){
 	//document.getElementById("image"+img_ind).src = "images/"+img_url;
 	document.getElementById("image"+img_ind).src = img_url;
 	//console.log("load first"+img_ind);
