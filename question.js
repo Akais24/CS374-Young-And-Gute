@@ -114,7 +114,7 @@ function change_query(qni){
 		var choices = query["answers"];
 		for(var i=0; i<query["answers"].length; i++){
 	
-			var b = $('<button type="button" class="btn btn-default">').text(choices[i]).data("idx", i);
+			var b = $('<button type="button" class="btn-choice">').text(choices[i]).data("idx", i);
 			b.click(function(){
 				var idx = $(this).data("idx");
 				var nextQni = getNextQuestionAndImages(idx, undefined, undefined);

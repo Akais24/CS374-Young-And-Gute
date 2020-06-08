@@ -5,19 +5,22 @@ body{
     font-family: 'Roboto', sans-serif;
 }
 nav{
-    height: 7%;
-    
+    height: 50px;
 }
 :root {
     --transparent: #0000;
-    --header_color: #FFC58B;
-    --question_color: #FFD6B3;
-    --result_color: #F7EBE9;
+    --header_color: #ff9a47;
+    --header_gradient:linear-gradient(120deg, #f6d365 0%, #fda085 100%);
+    --body_gradient: linear-gradient(to left,var(--transparent) 0%, var(--question_color)10%,var(--question_color)90%,var(--transparent) 100%);
+    --question_color: #FAF1E4;
+    --question_gradient:linear-gradient(to bottom,var(--question_color), var(--transparent) 30px,var(--transparent));
+    --candidate_gradient:linear-gradient(180deg, #fdfbfb 0%, #ebedee 100%);
+    --result_color: #FFF5F0;
     --main_color: #FFF5F0;
 }
 
 .header {
-    background: var(--header_color);
+    background: var(--header_gradient);
     height: 60px;
 }
 
@@ -27,6 +30,7 @@ nav{
     overflow: hidden;
     position: absolute;
 }
+
 
 /* style for intro page */
 #intro {
@@ -41,6 +45,8 @@ nav{
 
 #intro_guide_main {
     font-size: 40px;
+    font-family: 'Raleway', sans-serif;
+    font-weight: 800;
 }
 
 #intro_guide_detail {
@@ -84,6 +90,7 @@ nav{
 .intro_examples_image_src {
     width: 100%;
     height: 100%;
+    margin-bottom: 10px;
 }
 
 #intro_start {
@@ -101,7 +108,6 @@ nav{
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-    border: 1px solid transparent;
     padding: .375rem .75rem;
     font-size: 1rem;
     line-height: 1.5;
@@ -109,12 +115,21 @@ nav{
     transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
     /* bootstrap btn-outline-* */
     /* color: var(--header_color); */
+    width:250px;
     background-color: transparent;
     background-image: none;
     /* custom */
     border: 2px solid var(--header_color);
-    font-size: 40px;
+    border-radius: 40px;
+    font-size: 25px;
     color: black;
+}
+.btn-custom:hover {
+    background-color: var(--header_color);
+    color: white;
+}
+.btn-custom:focus{
+    outline: none;
 }
 
 /* style for fail page */
@@ -122,12 +137,15 @@ nav{
     width: 1200px;
     height: 100%;
     margin: auto;
-    background-color: var(--main_color);
+    background-color: var(--transparent);
+    background-image: url("./images/no_idea.png");
+    background-size: contain;
+    background-repeat: no-repeat;
 }
 
 #fail_image_item {
     width: 550px;
-    height: 500px;
+    height: 400px;
     padding: 50px;
     padding-bottom: 50px;
     margin: auto;
@@ -143,7 +161,8 @@ nav{
 
 #fail_text {
     margin: auto;
-    text-align: center;
+    margin-left: 50%;
+    text-align: left;
 }
 
 #fail_text_main {
@@ -156,6 +175,7 @@ nav{
 
 #fail_button button{
     margin-top: 60px;
+    margin-left: 12.5%;
     position: absolute;
     left: 50%;
     transform: translate(-50%, 0%);
@@ -167,7 +187,7 @@ nav{
     margin: auto;
     width: 1200px;
     height: 100%;
-    background: var(--result_color);
+    background: var(--candidate_gradient);
     margin-top:100%;
     margin-left:-600px;
     position: absolute;
@@ -188,9 +208,23 @@ nav{
     background-color: #FFFFFF;
     border-radius: 20px;
     border: solid 2px;
+    transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}
+.answer_button:focus{
+    outline: none;
 }
 #result_yes {
-    border-color: #FF822E;
+    border-color:var(--header_color);
+}
+#result_yes:hover {
+    background-color: var(--header_color);
+    color: white;
+}
+#result_no:hover {
+    background-color: lightgrey;
+}
+#result_back:hover {
+    background-color: lightgrey;
 }
 
 #result_bottom {
@@ -248,14 +282,47 @@ nav{
 }
 
 .question_bg{
-    background-color: #FAF1E4;
+    /*background: var(--question_color);*/
     width: 1200px;
     height: 100%;
     
 }
 
+.btn-choice {
+    /* bootstrap btn */
+    display: inline-block;
+    font-weight: 500;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    border-radius: .25rem;
+    transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+    /* bootstrap btn-outline-* */
+    /* color: var(--header_color); */
+    width:250px;
+    background-color: transparent;
+    background-image: none;
+    /* custom */
+    border: 2px solid grey;
+    border-radius: 40px;
+    font-size: 25px;
+    color: black;
+}
+.btn-choice:focus{
+    outline: none;
+    border-color: var(--header_color);
+    box-shadow:inset 4px 2px 0px -1px var(--header_color);
+}
+
 .candidate_bg{
-	background-color: #FFF5F0;
+	background-color: var(--result_color);
 	width: 1200px;
 	height: 50%;
 	position: absolute;
@@ -270,6 +337,9 @@ nav{
     height: 28px;
     margin-left: 15px;
     margin-top: 12px;
+}
+.back_button:focus{
+    outline: none;
 }
 
 
@@ -322,4 +392,17 @@ nav{
 .candidates{
 	width:100%;
 	height:100%;
+}
+.candidates:hover{
+    width:104%;
+    height:104%;
+    margin-left:-2%;
+    margin-top:-2%;
+}
+.candidates:focus{
+    outline:none;
+    width:100%;
+    height:100%;
+    margin-left:0%;
+    margin-top:0%;
 }
