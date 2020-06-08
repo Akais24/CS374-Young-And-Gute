@@ -171,7 +171,7 @@ async function newQ(qni){
 	setTimeout(function(){alignimgs(actimg);}, 500);
 }
 
-$(".back_button").click(async function(){
+$("#question .back_button").click(async function(){
 	const prevQni = undoAnswer();
 	if (prevQni === undefined) {
 		await fadeOutComponentById("question");
@@ -389,9 +389,17 @@ $("#div8").click(function() {
 
 });
 
+$("#result .back_button").click(function(){
+	quit_animation();
+});
+
 function gotoRes(imgnum, pId){
-	console.log(imgnum);
-	console.log(pId);
+	var product = products.find(e=>e.pId==pId);
+    enter_result();
+    setProductImg(product.mainImage);
+    setCandidatesImg(product.images);
+    setProductname(product.name);
+    enter_animation();
 }
 
 function init_candidates(){

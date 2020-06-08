@@ -99,7 +99,9 @@ function fadeInElements(){
     });
 }
 function fadeOutElements(){
+    fadeElements.reverse();
     fadeElements.forEach(function(element,index,array) {
         $(element).delay(index*200).fadeOut();
     });
+    fadeElements.reverse();
 }
