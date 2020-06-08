@@ -1,22 +1,12 @@
-
-let firstpage = 1;
+const gridsize = 12.5;
+const offsetGrid = [
+	[[4,4]],[[2,4],[6,4]],[[4,2],[2,6],[6,6]],[[2,2],[6,2],[2,6],[6,6]],
+	[[3,2],[5,2],[2,6],[4,6],[6,6]],[[2,2],[4,2],[6,2],[2,6],[4,6],[6,6]],
+	[[2,2],[4,2],[6,2],[1,6],[3,6],[5,6],[7,6]],
+	[[1,2],[3,2],[5,2],[7,2],[1,6],[3,6],[5,6],[7,6]]
+];
 
 let imgpnt = [-1,-1,-1,-1,-1,-1,-1,-1,-1];
-
-function hide_query(callback) {
-	return  $(".query").fadeOut(fadeTime, callback);
-}
-
-function show_query() {
-    return new Promise((resolve, reject) => {
-        $(".query").fadeIn(fadeTime, resolve);
-    });
-}
-
-function reset_query() {
-    $(".question").empty();
-    $(".choices").empty();
-}
 
 async function newQ(qni){
 	// 1) go to fail
@@ -33,30 +23,17 @@ async function newQ(qni){
 	}
 
 	// 2) go to question
-    hide_query(async function() {
-		reset_query();
-		// set next query
-		var query = qni.question;
-	
-		$(".question").text(query["question"]);
-	
-		var choices = query["answers"];
-		for(var i=0; i<query["answers"].length; i++){
-	
-			var b = $('<button type="button" class="btn btn-default">').text(choices[i]).data("idx", i);
-			b.click(function(){
-				var idx = $(this).data("idx");
-				var nextQni = getNextQuestionAndImages(idx, undefined, undefined);
-				newQ(nextQni);
-			})
-			$(".choices").append(b);
-		}
-		
-		show_query();
-	});
+    change_query(qni);
 
 	var curimgs = qni.images;
-	const nextPIds = curimgs.map(img => img.pId)
+    const nextPIds = curimgs.map(img => img.pId)
+    /*
+    const newPIds = nextPIds.map(pid => imgpnt.includes(pid));
+    const disappearPIds = imgpnt.map(pid => (pid!=-1)&&!(nextPIds.includes(pid)));
+
+    const disappearDivs = [];
+    const appearDivs = [];
+    */
 
 	const disappearPromises = []
 	for (let i = 1; i <= 8; i++) {
@@ -136,37 +113,61 @@ function putimage(img_ind, img_url){
 }
 
 
-var gridsize = 12.5;
-var offsetGrid = [
-	[4,4],[[2,4],[6,4]],[[4,2],[2,6],[6,6]],[[2,2],[6,2],[2,6],[6,6]],
-	[[3,2],[5,2],[2,6],[4,6],[6,6]],[[2,2],[4,2],[6,2],[2,6],[4,6],[6,6]],
-	[[2,2],[4,2],[6,2],[1,6],[3,6],[5,6],[7,6]],
-	[[1,2],[3,2],[5,2],[7,2],[1,6],[3,6],[5,6],[7,6]]
-];
 
+
+function hide_query(callback) {
+	return  $(".query").fadeOut(fadeTime, callback);
+}
+
+function show_query() {
+    return new Promise((resolve, reject) => {
+        $(".query").fadeIn(fadeTime, resolve);
+    });
+}
+
+function reset_query() {
+    $(".question").empty();
+    $(".choices").empty();
+}
+
+function change_query(qni){
+    hide_query(async function() {
+		reset_query();
+		// set next query
+		var query = qni.question;
+	
+		$(".question").text(query["question"]);
+	
+		var choices = query["answers"];
+		for(var i=0; i<query["answers"].length; i++){
+	
+			var b = $('<button type="button" class="btn btn-default">').text(choices[i]).data("idx", i);
+			b.click(function(){
+				var idx = $(this).data("idx");
+				var nextQni = getNextQuestionAndImages(idx, undefined, undefined);
+				newQ(nextQni);
+			})
+			$(".choices").append(b);
+		}
+		
+		show_query();
+	});
+}
 
 function alignimgs(number) {
 	return new Promise(async (resolve, reject) => {
 		const promises = [];
-
-		let j = 0;
-		let offset = offsetGrid[number-1];
+		var imgCount = 0;
 		for (let i = 1; i <= 8; i++) {
-			if (imgpnt[i] == -1) continue;
+            if (imgpnt[i] == -1) continue;
 
-			// set animation
-			const div = document.getElementById("div"+i);
-			const wrongdiv = document.getElementById("wrongdiv"+i);
-			const property = { 
-				left: offset[j][0]*gridsize +"%",
-				top: offset[j][1]*gridsize +"%" 
-			};
-
+            //set animation
+            imgCount++;
+            const offset = getOffset(number,imgCount);
 			promises.push(new Promise((resolve, reject) => {
-				$(div,wrongdiv).animate(property, 500, "swing", resolve);
-			}));
+				$(`#wrongdiv${i}, #div${i}`).animate({left: offset[0] +"%",top: offset[1] +"%"}, 500, "swing", resolve);
+			})); 
 			
-			j++;
 		}
 		await Promise.all(promises);
 		resolve();
@@ -174,23 +175,16 @@ function alignimgs(number) {
 }
 
 function init_candidates(){
-
 	for(var i=1 ; i<= 8 ; i++){
-		var down = (parseInt((i-1)/4))*50+25;
-		var right = ((i-1)%4)*25+12.5;
-		var div = document.getElementById("div"+i);
-		var wrongdiv = document.getElementById("wrongdiv"+i);
-		$(div).animate({left: right +"%",top: down +"%"}, 1);
-		$(wrongdiv).animate({left: right +"%",top: down +"%"}, 1);
-		//div.style.top = down +"%";
-		//div.style.left = right +"%";
-		div.style.transform = "translate(-50%, -50%)";
-
+        let offset = getOffset(8,i);
+        $(`#wrongdiv${i}, #div${i}`).animate({left: offset[0] +"%",top: offset[1] +"%"}, 1);
+        $(`#div${i}`).hide();
+		imgpnt[i]=-1;
 	}
-	for(var i=1 ; i<=8 ; i++){
+}
 
-			$("#div"+i).hide();
-			imgpnt[i]=-1;
-
-	}
+function getOffset(number,index){
+    console.log(number+","+index);
+    let offset = offsetGrid[number-1][index-1];
+    return [offset[0]*gridsize, offset[1]*gridsize];
 }
