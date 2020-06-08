@@ -27,93 +27,66 @@ async function newQ(qni){
 
 	var curimgs = qni.images;
     const nextPIds = curimgs.map(img => img.pId)
-    /*
-    const newPIds = nextPIds.map(pid => imgpnt.includes(pid));
-    const disappearPIds = imgpnt.map(pid => (pid!=-1)&&!(nextPIds.includes(pid)));
+    
+    const newimgs = curimgs.filter(img => !imgpnt.includes(img.pId));
+    var newPIds = newimgs.map(img => img.pId);
+    const disappearPIds = imgpnt.filter(pid => (pid!=-1)&&!(nextPIds.includes(pid)));
 
-    const disappearDivs = [];
-    const appearDivs = [];
-    */
-
+    // hide incorrect 
 	const disappearPromises = []
 	for (let i = 1; i <= 8; i++) {
-		// already disabled
-		if(imgpnt[i] == -1) continue;
-			
-		const isExist = nextPIds.includes(imgpnt[i]);
-		// remain
-		if (isExist) continue
-		
-		// not remain => should disappear
-		const disappearPromise = new Promise((resolve, reject) => {
-			// var wrongdiv = document.getElementById("wrongdiv"+i);
-
-			$("#wrongdiv"+i).show();
-			$("#div"+i).fadeOut(400, 
-				(
-					function() {
-						putimage(this,"images/image-placeholder.png");
-						imgpnt[i] = -1;
-						resolve();
-					}
-				).bind(i)
-			);
-			$("#wrongdiv"+i).fadeOut(500);
-		});
-
-		disappearPromises.push(disappearPromise);
+        if(disappearPIds.includes(imgpnt[i])){ // if this img in disappear list
+            imgpnt[i] = -1; // empty box
+            const disappearPromise = disappearDiv(i);
+            disappearPromises.push(disappearPromise);
+        }
+        if(imgpnt[i]==-1 && newPIds.length>0){
+            imgpnt[i] = newPIds.pop();
+        }
 	}
-
-	// hide incorrect 
 	await Promise.all(disappearPromises);
 
-	// get appear pIds
-	const appearPIds = [];
-	for (const newPId of nextPIds) {
-		// already in view
-		if (imgpnt.includes(newPId)) continue;
-
-		// really new img
-		appearPIds.push(newPId);
-
-		// assign the position
-		const index = imgpnt.indexOf(-1, 1);
-		imgpnt[index] = newPId;
-	}
-
-	// move image divs based on imgpnt
+    // move image divs based on imgpnt
 	await alignimgs(curimgs.length);
 
-	// appear images
-	for (const img of curimgs) {
-		const isAppear = appearPIds.includes(img.pId);
+    newPIds = newimgs.map(img => img.pId);
+	for (let i = 1; i <= 8; i++) {
+        if(newPIds.includes(imgpnt[i])){
+            var div = document.getElementById(`div${i}`);
+            var img = curimgs.find(x=>x.pId==imgpnt[i]);
+            putImageAndFadeIn(div,i,img.mainImage);
+        }
+    }
 
-		if (isAppear) {
-			for (let j = 1; j <= 8; j++) {
-				if(imgpnt[j] == img.pId){
-					putImageAndFadeIn(document.getElementById("div"+j), j, img.mainImage);
-					break;
-				}
-
-			}
-		}
-	}
+    
 }
 
 async function putImageAndFadeIn(div, j, mainImage) {
 	putimage(j, mainImage);
-	$(div).fadeIn(500);
+    $(div).fadeIn(500);
 }
 
 
 function putimage(img_ind, img_url){
-	//document.getElementById("image"+img_ind).src = "images/"+img_url;
-	document.getElementById("image"+img_ind).src = img_url;
-	//console.log("load first"+img_ind);
+    let img = document.getElementById("image"+img_ind);
+	img.src = img_url;
 }
 
-
-
+function disappearDiv(index){
+    const i = index;
+    return new Promise((resolve, reject) => {
+        $("#wrongdiv"+i).show();
+        $("#div"+i).fadeOut(400, 
+            (
+                function() {
+                    putimage(this,"images/image-placeholder.png");
+                    resolve();
+                }
+            ).bind(i)
+        );
+        $("#wrongdiv"+i).fadeOut(500);
+    });
+}
 
 function hide_query(callback) {
 	return  $(".query").fadeOut(fadeTime, callback);
@@ -184,7 +157,6 @@ function init_candidates(){
 }
 
 function getOffset(number,index){
-    console.log(number+","+index);
     let offset = offsetGrid[number-1][index-1];
     return [offset[0]*gridsize, offset[1]*gridsize];
 }
