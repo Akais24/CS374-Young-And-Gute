@@ -28,6 +28,13 @@ function test_quit(){
     quit_animation();
 }
 
+function setNobutton(pId){
+    $("#result_no").click(function(){
+        newQ(excludePidAndGetNextQuestionAndImages(pId));
+        quit_animation();
+    })
+}
+
 function setProductname(name){
     product_name = name;
 

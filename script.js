@@ -406,7 +406,8 @@ function gotoRes(imgnum, pId){
     enter_result();
     setProductImg(product.mainImage);
     setCandidatesImg(product.images);
-    setProductname(product.name);
+	setProductname(product.name);
+	setNobutton(pId);
     enter_animation();
 }
 
