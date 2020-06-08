@@ -98,7 +98,7 @@ async function newQ(qni){
 	
 	// go to result
 	if (qni.pId !== undefined) {
-		gotoRes(undefined, qni.pId);
+		gotoRes(qni.pId);
 		return;
 	}
 
@@ -351,59 +351,20 @@ function alignimgs(number){
 
 }
 
-$("#div1").click(function() {           
-
-		gotoRes(1,imgpnt[1]);
-
-});
-
-$("#div2").click(function() {
-           
-		gotoRes(2,imgpnt[2]);
-
-});
-
-$("#div3").click(function() {
-           
-		gotoRes(3,imgpnt[3]);
-
-});
-
-$("#div4").click(function() {
-           
-		gotoRes(4,imgpnt[4]);
-
-});
-
-$("#div5").click(function() {
-           
-		gotoRes(5,imgpnt[5]);
-
-});
-
-$("#div6").click(function() {
-           
-		gotoRes(6,imgpnt[6]);
-
-});
-
-$("#div7").click(function() {
-           
-		gotoRes(7,imgpnt[7]);
-
-});
-
-$("#div8").click(function() {
-           
-		gotoRes(8,imgpnt[8]);
-
-});
+for (let i = 1; i < 8; i++) {
+	$(`#div${i}`).click(function() {
+		const pId = imgpnt[i];
+		getNextQuestionAndImages(undefined, pId, undefined);
+		gotoRes(pId);
+	});
+}
 
 $("#result .back_button").click(function(){
 	quit_animation();
+	newQ(undoAnswer());
 });
 
-function gotoRes(imgnum, pId){
+function gotoRes(pId) {
 	var product = products.find(e=>e.pId==pId);
     enter_result();
     setProductImg(product.mainImage);
