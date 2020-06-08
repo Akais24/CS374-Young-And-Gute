@@ -34,7 +34,8 @@ function setProductname(name){
     document.querySelector("#product_text").innerHTML=product_name;
     document.querySelector("#result_bottom p").innerHTML="Other images of "+ product_name;
 
-    buylink = "https://search.shopping.naver.com/search/all?query="+name+"&frm=NVSHATC"
+    var nameuri = encodeURI(name)
+    var buylink = "https://search.shopping.naver.com/search/all?query="+nameuri+"&frm=NVSHATC"
     yes_button = document.querySelector("#result_yes");
     yes_button.setAttribute("onClick","location.href=\""+buylink+"\"");
 }
