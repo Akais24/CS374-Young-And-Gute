@@ -1,6 +1,7 @@
 const maxImageLimit = 8;
 
 let answers = [];
+let excludePids = [];
 let questionIndex = undefined;
 
 // Input : aId(Number), pId(Number)
@@ -41,6 +42,10 @@ function getNextQuestionAndImages(answerIndex, pId) {
 function getNextData() {
     let nextCandidates = [];
     for (product of products) {
+        if (excludePids.includes(product.pId)) {
+            continue;
+        }
+
         let score = 0;
         for (answer of answers) {
             const possibleAnswers = product.questions[answer.questionIndex];
@@ -123,8 +128,14 @@ function undoAnswer() {
     }
 }
 
+function excludePidAndGetNextQuestionAndImages(pId) {
+    excludePids.push(pId);
+    return getNextData();
+}
+
 function reset_algorithm() {
     answers = [];
+    excludePids = [];
     questionIndex = undefined;
 }
 
