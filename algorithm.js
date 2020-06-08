@@ -44,7 +44,7 @@ function getNextData() {
         let score = 0;
         for (answer of answers) {
             const possibleAnswers = product.questions[answer.questionIndex];
-            if (possibleAnswers && possibleAnswers.indexOf(answer.answerIndex + 1) !== -1) {
+            if (possibleAnswers && possibleAnswers.indexOf(answer.answerIndex) !== -1) {
                 score++;
             }
         }
