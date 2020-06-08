@@ -51,7 +51,15 @@ function fadeOutComponentById(componentId) {
 }
 
 function enter_result() {
-    $("#section").html('<object type="text/html" data="result/result.html" style="width:100%;height:100%;"></object>');
+    return new Promise((resolve, reject) => {
+        $("#result").fadeIn(fadeTime, resolve);
+    });
+}
+
+function exit_result() {
+    return new Promise((resolve, reject) => {
+        $("#result").fadeOut(fadeTime, resolve);
+    });
 }
 
 function slide(){
@@ -381,9 +389,17 @@ $("#div8").click(function() {
 
 });
 
+$("#result .back_button").click(function(){
+	quit_animation();
+});
+
 function gotoRes(imgnum, pId){
-	console.log(imgnum);
-	console.log(pId);
+	var product = products.find(e=>e.pId==pId);
+    enter_result();
+    setProductImg(product.mainImage);
+    setCandidatesImg(product.images);
+    setProductname(product.name);
+    enter_animation();
 }
 
 function init_candidates(){
@@ -416,6 +432,7 @@ $("#intro").hide();
 $("#fail").hide();
 reset_query();
 $("#question").hide();
+$("#result").hide();
 
 set_intro();
 set_fail();

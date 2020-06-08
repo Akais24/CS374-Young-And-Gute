@@ -4,16 +4,16 @@ var product_name;
 
 
 var fadeElements =[
-    ".question",
-    "#imagebar p",
-    "#imagebar img"
+    "#result_middle",
+    "#result_bottom p",
+    "#result_bottom img"
 ];
 
 var imgSource_test =[
-    "../images/1.jpg",
-    "../images/2.jpg",
-    "../images/3.jpg",
-    "../images/4.jpg"
+    "./images/1.jpg",
+    "./images/2.jpg",
+    "./images/3.jpg",
+    "./images/4.jpg"
 ];
 
 var test_product_name = "Macrame"
@@ -32,15 +32,16 @@ function setProductname(name){
     product_name = name;
 
     document.querySelector("#product_text").innerHTML=product_name;
-    document.querySelector("#imagebar p").innerHTML="Other images of "+ product_name;
+    document.querySelector("#result_bottom p").innerHTML="Other images of "+ product_name;
 
-    buylink = "https://search.shopping.naver.com/search/all?query="+name+"&frm=NVSHATC"
+    var nameuri = encodeURI(name)
+    var buylink = "https://search.shopping.naver.com/search/all?query="+nameuri+"&frm=NVSHATC"
     yes_button = document.querySelector("#result_yes");
     yes_button.setAttribute("onClick","location.href=\""+buylink+"\"");
 }
 
 function setCandidatesImg(imgList){
-    var img =  document.querySelectorAll("#imagebar img");
+    var img =  document.querySelectorAll("#result_bottom img");
     img.forEach(function(element,index,array){
         element.setAttribute("src",imgList[index]);
     });
@@ -59,7 +60,7 @@ function hideObjects(){
 
 function enter_animation(){
     hideObjects();
-    var elem = document.getElementById("content");
+    var elem = document.getElementById("result");
     var pos = 100;
     var id = setInterval(frame,5);
     function frame(){
@@ -79,7 +80,7 @@ function quit_animation(){
     setTimeout(do_quit_animation,fadeElements.length*200+200);
 }
 function do_quit_animation(){
-    var elem = document.getElementById("content");
+    var elem = document.getElementById("result");
     var pos = 0;
     var id = setInterval(frame,5);
     function frame(){
@@ -99,7 +100,9 @@ function fadeInElements(){
     });
 }
 function fadeOutElements(){
+    fadeElements.reverse();
     fadeElements.forEach(function(element,index,array) {
         $(element).delay(index*200).fadeOut();
     });
+    fadeElements.reverse();
 }
