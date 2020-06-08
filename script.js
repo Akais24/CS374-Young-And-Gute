@@ -162,10 +162,15 @@ async function newQ(qni){
 		if(check == 0){
 			for(var j=1 ; j<=8 ; j++){
 				if(imgpnt[j]==-1){
-					putimage(j,img.mainImage);
+					//putimage(j,img.mainImage);
 					//putimage(j,"1.jpg");
 					//putimage(j, "https://drive.google.com/uc?export=view&id=1gpnnJUARu5uA3Q11osy5dwHf9HSi13Ok");
-					setTimeout(function(div){$(div).fadeIn();}, 500, document.getElementById("div"+j));
+					setTimeout(async function(div,j,mainImage){
+							await putimage(j,mainImage);
+							console.log("start fadeIn"+j);
+							$("#image"+j).on('load',(function(){$(this).fadeIn(500);}).bind(div));
+							//setTimeout(function(div){$(div).fadeIn(500);},1000,div);
+					}, 500, document.getElementById("div"+j),j,img.mainImage);
 					imgpnt[j]=img.pId;
 					actimg++;
 					break;
@@ -190,10 +195,12 @@ $("#question .back_button").click(async function(){
 	}
 });
 
-function putimage(img_ind, img_url){
+async function putimage(img_ind, img_url){
 	//document.getElementById("image"+img_ind).src = "images/"+img_url;
 	document.getElementById("image"+img_ind).src = img_url;
+	console.log("load first"+img_ind);
 }
+
 
 function alignimgs(number){
 
