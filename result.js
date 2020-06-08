@@ -29,11 +29,25 @@ function test_quit(){
 }
 
 function setNobutton(pId){
+    $("#result_back").hide();
+    $("#result_no").show();
     $("#result_no").click(function(){
         const nextQni = getNextQuestionAndImages(undefined, undefined, pId);
-        newQ(nextQni);
-        quit_animation();
+        if(nextQni.pId !== undefined){ // next also result
+            fadeOutElements();
+            newQ(nextQni);
+        }
+        else{ // next is question
+            newQ(nextQni);
+            quit_animation();
+        }
+        
     })
+}
+
+function setBackbutton(){
+    $("#result_no").hide();
+    $("#result_back").show();
 }
 
 function setProductname(name){
