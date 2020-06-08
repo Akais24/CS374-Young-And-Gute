@@ -87,12 +87,20 @@ function show_query() {
 }
 
 async function newQ(qni){
+	// 1) go to fail
     if (qni === undefined) {
 		await fadeOutComponentById("question");
 		await fadeInComponentById("fail");
         return;
-    }
+	}
+	
+	// go to result
+	if (qni.pId !== undefined) {
+		gotoRes(undefined, qni.pId);
+		return;
+	}
 
+	// 2) go to question
     hide_query(async function() {
 		reset_query();
 		// set next query
