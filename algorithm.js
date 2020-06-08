@@ -31,6 +31,7 @@ function getNextQuestionAndImages(answerIndex, chosenPId, excludePId) {
     }
     // user click product
     else if (chosenPId !== undefined) {
+        answers.push({ chosenPId });
         return products.find(p => p.pId === chosenPId);
     }
     // user click no on result page
@@ -52,7 +53,7 @@ function getNextData() {
     }
 
     const excludePIds = answers.filter(a => a.excludePId !== undefined).map(a => a.excludePId);
-    const qAnswers = answers.filter(a => a.excludePId === undefined);
+    const qAnswers = answers.filter(a => a.questionIndex !== undefined);
 
     const leftProducts = products.filter(p => !excludePIds.includes(p.pId));
 
