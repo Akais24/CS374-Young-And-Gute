@@ -141,8 +141,8 @@ async function newQ(qni){
 		if(check == 0){
 			var wrongdiv = document.getElementById("wrongdiv"+i);
 			$(wrongdiv).show();
-			$("#div"+i).fadeToggle(500);
-			$("#wrongdiv"+i).fadeToggle(500);
+			$("#div"+i).fadeOut(400, (function(){putimage(this,"images/image-placeholder.png");}).bind(i));
+			$("#wrongdiv"+i).fadeOut(500);
 			imgpnt[i]=-1;
 			actimg--;
 		}
@@ -164,10 +164,16 @@ async function newQ(qni){
 		if(check == 0){
 			for(var j=1 ; j<=8 ; j++){
 				if(imgpnt[j]==-1){
-					putimage(j,img.mainImage);
+					//putimage(j,img.mainImage);
 					//putimage(j,"1.jpg");
 					//putimage(j, "https://drive.google.com/uc?export=view&id=1gpnnJUARu5uA3Q11osy5dwHf9HSi13Ok");
-					setTimeout(function(div){$(div).fadeIn();}, 500, document.getElementById("div"+j));
+					setTimeout(async function(div,j,mainImage){
+							putimage(j,mainImage);
+							//console.log("start fadeIn"+j);
+							$(div).fadeIn(500);
+							//$("#image"+j).on('load',(function(){$(this).fadeIn(500);}).bind(div));
+							//setTimeout(function(div){$(div).fadeIn(500);},750,div);
+					}, 500, document.getElementById("div"+j),j,img.mainImage);
 					imgpnt[j]=img.pId;
 					actimg++;
 					break;
@@ -178,7 +184,7 @@ async function newQ(qni){
 	}
 	//console.log(imgpnt);
         //console.log(actimg);
-	setTimeout(function(){alignimgs(actimg);}, 500);
+	setTimeout(function(){alignimgs(actimg);}, 450);
 }
 
 $("#question .back_button").click(async function(){
@@ -192,10 +198,12 @@ $("#question .back_button").click(async function(){
 	}
 });
 
-function putimage(img_ind, img_url){
+async function putimage(img_ind, img_url){
 	//document.getElementById("image"+img_ind).src = "images/"+img_url;
 	document.getElementById("image"+img_ind).src = img_url;
+	//console.log("load first"+img_ind);
 }
+
 
 function alignimgs(number){
 
@@ -351,7 +359,7 @@ function alignimgs(number){
 
 }
 
-for (let i = 1; i < 8; i++) {
+for (let i = 1; i <= 8; i++) {
 	$(`#div${i}`).click(function() {
 		const pId = imgpnt[i];
 		getNextQuestionAndImages(undefined, pId, undefined);
@@ -373,6 +381,8 @@ function gotoRes(pId) {
 	setNobutton(pId);
     enter_animation();
 }
+
+
 
 function init_candidates(){
 
