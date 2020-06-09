@@ -314,6 +314,10 @@ nav{
     border-radius: 40px;
     font-size: 25px;
     color: black;
+    background-color: #FFFFFF;
+}
+.btn-choice:hover{
+    border-color: var(--header_color);
 }
 .btn-choice:focus{
     outline: none;
@@ -398,6 +402,7 @@ nav{
     height:104%;
     margin-left:-2%;
     margin-top:-2%;
+    /*transform: rotate(3deg);*/
 }
 .candidates:focus{
     outline:none;
