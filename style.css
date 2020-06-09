@@ -282,7 +282,7 @@ nav{
 }
 
 .question_bg{
-    /*background: var(--question_color);*/
+    background: var(--question_color);
     width: 1200px;
     height: 100%;
     
