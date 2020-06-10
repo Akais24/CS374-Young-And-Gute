@@ -17,8 +17,7 @@ Asking questions
 Finding result
 
 ![ReadmeImage/fail_view.png](ReadmeImage/fail_view.png)
-
-fail
+Failure page
 
 ## Library & Frameworks
 
