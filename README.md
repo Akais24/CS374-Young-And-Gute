@@ -1,6 +1,4 @@
-# Readme.md
-
-Project GGYU(뀨)
+# Project GGYU(뀨)
 
 This project helps people to find home styling product. If you want to find specific type of product but don't know how to call it, this will help you. We will ask some questions related with products. For example, what does it look like or ways of using it. All users have to do is just clicking answers
 
