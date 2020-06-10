@@ -54,6 +54,8 @@ Bootstrap: [http://bootstrapk.com/](http://bootstrapk.com/)
 
 ```
 
+The more products will be added in the future version.
+
 ## Files
 
 ```
