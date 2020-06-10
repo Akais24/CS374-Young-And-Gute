@@ -6,19 +6,19 @@ This project helps people to find home styling product. If you want to find spec
 
 ## **Screenshots**
 
-![ReadmeImage/Untitled.png](Readme%20md%20d0063be91c26469a8328e18fcb82b7bd/Untitled.png)
+![ReadmeImage/Untitled.png](ReadmeImage/Untitled.png)
 
 Main page
 
-![ReadmeImage/question_view.png](Readme%20md%20d0063be91c26469a8328e18fcb82b7bd/question_view.png)
+![ReadmeImage/question_view.png](ReadmeImage/question_view.png)
 
 Asking questions
 
-![ReadmeImage/question_view%201.png](Readme%20md%20d0063be91c26469a8328e18fcb82b7bd/question_view%201.png)
+![ReadmeImage/question_view%201.png](ReadmeImage/question_view%201.png)
 
 Finding result
 
-![ReadmeImage/fail_view.png](Readme%20md%20d0063be91c26469a8328e18fcb82b7bd/fail_view.png)
+![ReadmeImage/fail_view.png](ReadmeImage/fail_view.png)
 
 fail
 
