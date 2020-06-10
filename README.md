@@ -50,8 +50,10 @@ Bootstrap: [http://bootstrapk.com/](http://bootstrapk.com/)
 
 ## **Contribute**
 
-Jiseok Kim (wltjr1002@gmail.com / @wltjr1002)
+Jiseok Kim ([@wltjr1002](https://github.com/wltjr1002))
 
-Real GGYU Jin 
+Yeongbin Kim ([@ybin77](https://github.com/ybin77))
 
-Jaeyoung Hwang ( akqq24@gmail.com / @Akais24)
+Taegyu Jin ([@realjin36](https://github.com/realjin36))
+
+Jaeyoung Hwang ([@Akais24](https://github.com/Akais24))
