@@ -13,7 +13,9 @@ function set_intro() {
 			<li class="intro_examples_image_li">
 				<a href="${getBuyLink(name)}">
                 	<img src="${mainImage}" class="intro_examples_image_src" onclick="location.href=\"${getBuyLink(name)}\"">
-					<div>${name}</div>
+					<div class="image_textbox">
+						<p class="question_imgdiv_image_text">${name}</p>
+					</div>
 				</a>
             </li>`;
         

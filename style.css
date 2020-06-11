@@ -74,16 +74,21 @@ body{
     margin-left: auto;
     margin-right: auto;
     padding: 0;
-    width: 100%;
+    width: 1200px;
+    height: 240px;
 }
 
 .intro_examples_image_li {
     /* display: inline-block; */
     float: left;
     position: relative;
-    width: 16%;
+    width: 15%;
     margin-left: 2%;
     margin-right: 2%;
+}
+
+.intro_examples_image_li:hover {
+    width: 16%;
 }
 
 .intro_examples_image_src {
