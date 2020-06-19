@@ -39,7 +39,7 @@ body{
 }
 
 #intro_guide {
-    margin-top: 5%;
+    margin-top: 80px;
 }
 
 #intro_guide_main {
@@ -93,7 +93,7 @@ body{
 }
 
 #intro_start {
-    margin-top: 10%;
+    margin-top: 120px;
 }
 
 .btn-custom {
