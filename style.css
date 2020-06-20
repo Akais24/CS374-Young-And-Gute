@@ -15,6 +15,8 @@ body{
     --candidate_gradient:linear-gradient(180deg, #fdfbfb 0%, #ebedee 100%);
     --result_color: #FFF5F0;
     --main_color: #FFF5F0;
+
+    --wrong_color: #FA1001;
 }
 
 .header {
@@ -223,8 +225,12 @@ body{
 #result_no:hover {
     background-color: lightgrey;
 }
+#result_back {
+    border-color: var(--wrong_color);
+}
 #result_back:hover {
-    background-color: lightgrey;
+    background-color: var(--wrong_color);
+    color: white;
 }
 
 #result_bottom {
