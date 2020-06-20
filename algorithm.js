@@ -54,8 +54,9 @@ function getNextData() {
     if (qAnswers.length === 0) {
         return {
             question: questions[currentQuestionIndex],
-            images: getRandomProducts(maxImageLimit)
-                .map(extractDataFromProduct),
+            // images: getRandomProducts(maxImageLimit)
+            //     .map(extractDataFromProduct),
+            images: [],
         }
     }
 
