@@ -76,7 +76,7 @@ function putimage(img_ind, img_url){
 function disappearDiv(index){
     const i = index;
     return new Promise((resolve, reject) => {
-        $("#wrongdiv"+i).show();
+       // $("#wrongdiv"+i).show();
         $("#div"+i).fadeOut(400, 
             (
                 function() {
