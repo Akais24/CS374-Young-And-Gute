@@ -366,6 +366,7 @@ body{
     flex-direction: row;
     flex-wrap: wrap;
     align-content: center;
+    padding: 30px;
 }
 
 .choices button{
