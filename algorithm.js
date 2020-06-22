@@ -171,7 +171,7 @@ function reset_algorithm() {
     currentQuestionIndex = undefined;
 }
 
-const introImageLimit = 5;
+const introImageLimit = 1;
 
 function getIntroImages() {
     return getRandomProducts(introImageLimit);
