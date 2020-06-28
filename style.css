@@ -3,9 +3,25 @@ body{
     margin: 0;
     height: 100%;
     font-family: 'Roboto', sans-serif;
+    background-color: var(--naver_lightgrey);
 }
 
 :root {
+    --naver_green: #03CF5B;
+    --naver_blue: #475bce;
+    --naver_violet: #976bfc;
+    --naver_lightgrey: #F4F4F4;
+    --naver_grey : #E9ECEF;
+    --naver_gradient: linear-gradient(
+        to right,
+        var(--naver_green) 0%,
+        var(--naver_green) 50%,
+        var(--naver_blue) 80%,
+        var(--naver_violet) 100%
+    );
+
+    --dim_gradient: linear-gradient(to bottom, var(--naver_grey), var(--transparent) 30px, var(--transparent));
+    
     --transparent: #0000;
     --header_color: #ff9a47;
     --header_gradient:linear-gradient(120deg, #f6d365 0%, #fda085 100%);
@@ -18,7 +34,7 @@ body{
 }
 
 .header {
-    background: var(--header_gradient);
+    background: var(--naver_gradient);
     width:  max(1200px, 100%);
     height: 60px;
 }
@@ -28,6 +44,7 @@ body{
     height: 870px;
     /* overflow: hidden; */
     position: absolute;
+    background-color: var(--naver_grey);
 }
 
 
@@ -37,7 +54,7 @@ body{
     height: 100%;
     white-space: nowrap;
     position: relative;
-    
+    background-color: #FFFFFF;
 }
 
 #intro_guide {
@@ -126,16 +143,12 @@ body{
 
     /* custom */
     outline:none;
-    background-color: var(--header_color);
+    background-color: var(--naver_green);
     background-image: none;
     border: none;
     border-radius: 40px;
     font-size: 25px;
     color: white;
-}
-
-#intro_start_btn:hover{
-    background-color: #f7903c;
 }
 
 .btn-custom {
@@ -160,13 +173,13 @@ body{
     background-color: transparent;
     background-image: none;
     /* custom */
-    border: 2px solid var(--header_color);
+    border: 2px solid var(--naver_green);
     border-radius: 40px;
     font-size: 25px;
     color: black;
 }
 .btn-custom:hover {
-    background-color: var(--header_color);
+    background-color: var(--naver_green);
     color: white;
 }
 .btn-custom:focus{
@@ -178,7 +191,7 @@ body{
     width: 1200px;
     height: 100%;
     margin: auto;
-    background-color: var(--transparent);
+    background-color: #FFFFFF;
     background-image: url("./images/no_idea.png");
     background-size: contain;
     background-repeat: no-repeat;
@@ -228,7 +241,7 @@ body{
     margin: auto;
     width: 1200px;
     height: 100%;
-    background: var(--candidate_gradient);
+    background: #FFFFFF;
     margin-top:100%;
     margin-left:-600px;
     position: absolute;
@@ -256,17 +269,17 @@ body{
     outline: none;
 }
 #result_yes {
-    border-color:var(--header_color);
+    border-color:var(--naver_green);
 }
 #result_yes:hover {
-    background-color: var(--header_color);
+    background-color: var(--naver_green);
     color: white;
 }
 #result_no:hover {
-    background-color: lightgrey;
+    background-color: var(--naver_lightgrey);
 }
 #result_back:hover {
-    background-color: lightgrey;
+    background-color: var(--naver_lightgrey);
 }
 
 #result_bottom {
@@ -324,10 +337,12 @@ body{
 }
 
 .question_bg{
-    background: var(--question_color);
+    background: #FFFFFF;
     width: 1200px;
-    height: 100%;
-    
+    height: 45%;
+    position: absolute;
+    top:5%;
+    border: solid 1px lightgray;
 }
 
 .btn-choice {
@@ -359,22 +374,19 @@ body{
     background-color: #FFFFFF;
 }
 .btn-choice:hover{
-    border-color: var(--header_color);
+    border-color: var(--naver_green);
 }
 .btn-choice:focus{
     outline: none;
-    border-color: var(--header_color);
-    box-shadow:inset 4px 2px 0px -1px var(--header_color);
+    border-color: var(--naver_green);
 }
 
 .candidate_bg{
-	background-color: var(--result_color);
+	background-color: var(--dim_gradient);
 	width: 1200px;
 	height: 45%;
-	position: absolute;
-	left: 50%;
-	top: 55%;
-	transform: translate(-50%, 0%);
+    position: absolute;
+    bottom: 0;
 /* border: 5px solid #ff8a4f; */
 }
 
@@ -507,7 +519,7 @@ body{
     height:104%;
     margin-left:-2%;
     margin-top:-2%;
-    /*transform: rotate(3deg);*/
+    transform: rotate(3deg);
 } */
 
 
