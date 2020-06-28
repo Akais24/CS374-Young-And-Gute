@@ -71,37 +71,20 @@
         <!-- div for result page -->
         <div id="result">
             <input type="image" class="back_button" src="images/icon_back.png">
-            <div id="result_middle" class="wrapper w100 h60">
-                <div class="center_align content w50">
-                    <div class="wrapper">
-                        <div class="bold30 content">
-                            <img id="product_img" src="../images/image-placeholder.png">
-                            <p id="product_text"> Product name</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="center_align content w50">
-                    <div class="wrapper">
-                        <div class="bold30 content">
-                            <p> Is this what you thought? </p>
-                            </br>
-                            <button class="answer_button" id="result_yes">YES! (Go to buy page)</button>
-                            <button class="answer_button" id="result_no">No.. (Keep answering)</button>
-                            <button class="answer_button" id="result_back">No.. (Back to question)</button>
-                        </div>
-                    </div>
+            <div id="result_images_div">
+                <img id="result_images_main_image" src="./images/image-placeholder.png">
+                <div id="result_images_other">
+                    <img class="result_images_other_image" src="./images/image-placeholder.png">
+                    <img class="result_images_other_image" src="./images/image-placeholder.png">
+                    <img class="result_images_other_image" src="./images/image-placeholder.png">
                 </div>
             </div>
-            <div id="result_bottom">
-                <div class="wrapper w100">
-                    <div class="normal20 left_align content">
-                        <p>Other images of "Macrame"</p>
-                        <img class="alternative" src="../images/image-placeholder.png">
-                        <img class="alternative" src="../images/image-placeholder.png">
-                        <img class="alternative" src="../images/image-placeholder.png">
-                        <img class="alternative" src="../images/image-placeholder.png">
-                    </div>
-                </div>
+            <div id="result_answer_div">
+                <p id="result_answer_text">answer</p>
+            </div>
+            <div id="result_button_div">
+                <button class="answer_button" id="result_yes">Search in Naver shopping</button>
+                <button class="answer_button" id="result_no">Keep answering</button>
             </div>
         </div>
 

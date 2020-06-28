@@ -80,17 +80,6 @@ function set_result(){
 		}
 	});
 	
-	$("#result_back").click(function(){
-		var nextData = undoAnswer();
-		if(nextData.pId !== undefined){
-			newQ(nextData);
-		}
-		else {
-			resultQuitAnimation();
-			newQ(nextData);
-		}
-	})
-	
 }
 
 function fadeInComponentById(componentId) {

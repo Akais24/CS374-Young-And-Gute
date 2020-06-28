@@ -19,6 +19,7 @@ let currentQuestionIndex = undefined;
 //              images(Object List { pId(Number), name(String), mainImage(String) })
 //          }
 function getNextQuestionAndImages(answerIndex, chosenPId, excludePId) {
+    // console.log({ answerIndex, chosenPId, excludePId });
     if (currentQuestionIndex === undefined) {
         currentQuestionIndex = 0;
         
@@ -161,6 +162,9 @@ function undoAnswer() {
         // if last action is answering question
         if (lastAnswer.questionIndex !== undefined) {
             currentQuestionIndex = lastAnswer.questionIndex;
+        }
+        else if (lastAnswer.chosenPId !== undefined) {
+            return products.find(p => p.pId === lastAnswer.chosenPId);
         }
         return getNextData();
     }

@@ -242,17 +242,83 @@ body{
     width: 1200px;
     height: 100%;
     background: #FFFFFF;
-    margin-top:100%;
+    /* margin-top:100%; */
     margin-left:-600px;
     position: absolute;
     top:0px;
     left:50%;
     z-index: 1;
 }
-#product_img{
-    margin:10px;
-    width: 400px;
+
+#result_images_div {
+    width: 100%;
+    height: 60%;
 }
+
+#result_images_main_image {
+    width: 500px;
+    margin: 10px;
+    position: absolute;
+    /* left: calc(50% - 250px - 70px); */
+    left: 260px;
+    top: 40px;
+}
+
+#result_images_other {
+    width: 160px;
+    height: 500px;
+    margin: 10px;
+    position: absolute;
+    /* left: calc(50% + 250px - 70px + 5px); */
+    right: 260px;
+    top: calc(40px - 10px);
+}
+
+.result_images_other_image {
+    display: table-cell;
+    width: 160px;
+    margin: 10px;
+}
+
+#result_answer_div {
+    width: 100%;
+    height: 10%;
+    text-align: center;
+    margin-top: 2%;
+}
+
+#result_answer_text {
+    margin: auto;
+    font-size: 40px;
+    font-weight: bold;
+}
+
+#result_button_div {
+    width: 100%;
+    height: 20%;
+    text-align: center;
+}
+
+#result_yes {
+    display: inline-block;
+    margin: 30px;
+    border-color:var(--naver_green);
+}
+#result_yes:hover {
+    background-color: var(--naver_green);
+    color: white;
+}
+#result_no {
+    display: inline-block;
+    margin: 30px;
+}
+#result_no:hover {
+    background-color: var(--naver_lightgrey);
+}
+#result_back:hover {
+    background-color: var(--naver_lightgrey);
+}
+
 .answer_button{
     margin: 8px;
     width: 300px;
@@ -267,26 +333,6 @@ body{
 }
 .answer_button:focus{
     outline: none;
-}
-#result_yes {
-    border-color:var(--naver_green);
-}
-#result_yes:hover {
-    background-color: var(--naver_green);
-    color: white;
-}
-#result_no:hover {
-    background-color: var(--naver_lightgrey);
-}
-#result_back:hover {
-    background-color: var(--naver_lightgrey);
-}
-
-#result_bottom {
-    margin: auto;
-    width: 90%;
-    height: 30%;
-    text-align: left;
 }
 .alternative {
     width: 24%;
