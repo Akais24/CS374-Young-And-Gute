@@ -16,7 +16,7 @@ function gotoResFromQuestion(pId) {
 	if(document.getElementById("result").style.display=="none"){
 		fadeInComponentById("result");
 	}
-    setProductInfo(pId);
+    setProductInfo(pId, true);
 	if(document.getElementById("result").style.marginTop!="0%"){
 		resultEnterAnimation();
 	}
@@ -28,11 +28,11 @@ function gotoResFromQuestion(pId) {
 
 function gotoResFromImage(pId) {
     fadeInComponentById("result");
-    setProductInfo(pId);
+    setProductInfo(pId, false);
     resultEnterAnimation();
 }
 
-function setProductInfo(pId) {
+function setProductInfo(pId, isExcluded) {
 	const { name, mainImage, images } = products.find(e=>e.pId==pId);
     // set main image
     $("#result_images_main_image").attr("src", mainImage);
@@ -52,14 +52,25 @@ function setProductInfo(pId) {
 
     // set no button click event    
     $("#result_no").click(function(){
-        const nextQni = getNextQuestionAndImages(undefined, undefined, pId);
-        if(nextQni !== undefined && nextQni.pId !== undefined){ // next also result
-            fadeOutResultElements();
-            newQ(nextQni);
-        }
-        else{ // next is question
-            newQ(nextQni);
-            resultQuitAnimation();
+        if (isExcluded) {
+            const nextQni = getNextQuestionAndImages(undefined, undefined, pId);
+            if(nextQni !== undefined && nextQni.pId !== undefined){ // next also result
+                fadeOutResultElements();
+                newQ(nextQni);
+            }
+            else{ // next is question
+                newQ(nextQni);
+                resultQuitAnimation();
+            }
+        } else {
+            var nextData = undoAnswer();
+            if(nextData.pId !== undefined){
+                newQ(nextData);
+            }
+            else {
+                resultQuitAnimation();
+                newQ(nextData);
+            }
         }
     });
 }

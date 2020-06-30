@@ -163,9 +163,6 @@ function undoAnswer() {
         if (lastAnswer.questionIndex !== undefined) {
             currentQuestionIndex = lastAnswer.questionIndex;
         }
-        else if (lastAnswer.chosenPId !== undefined) {
-            return products.find(p => p.pId === lastAnswer.chosenPId);
-        }
         return getNextData();
     }
 }
