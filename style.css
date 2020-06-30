@@ -386,7 +386,10 @@ body{
 	width: 1200px;
 	height: 45%;
     position: absolute;
-    bottom: 0;
+    bottom: 2%;
+    background-color: rgba( 0, 0, 0, 0.1 );
+border: 5px solid rgba(0,0,0,0.005);
+    border-radius: 20px;
 /* border: 5px solid #ff8a4f; */
 }
 
