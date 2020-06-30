@@ -5,7 +5,7 @@
     height: 100%;
     margin: auto;
     background-color: #FFFFFF;
-    background-image: url("./images/no_idea.png");
+    background-image: url("../images/no_idea.png");
     background-size: contain;
     background-repeat: no-repeat;
 }
