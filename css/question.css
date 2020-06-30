@@ -108,9 +108,16 @@
 #candid_discdiv{
 	display:table;	
 	position: absolute;
-	width: 100%;
-	height: 10%;
+	width: 13em;
+    height: 2em;
+    left: -1.2em;
+    background-image: url("../images/bookclip.png");
+    background-size: contain;
+    color: #FFFFFF;
 
+    text-align: left;
+    font-size: 20px;
+	font-weight: bold;
 }
 
 #candid_imgdiv{	
@@ -136,10 +143,7 @@
 #question_candidate_image_text {
 	display:table-cell;
 	vertical-align:middle;
-    text-align: left;
-    font-size: 20px;
-	font-weight: bolder;
-    padding-left: 2%;
+    padding-left: 1.7em;
     /*color: #ff8a4f;*/
 }
 

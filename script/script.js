@@ -69,7 +69,7 @@ function set_question(){
 }
 
 function set_result(){
-	$("#result .back_button").click(function(){
+	$("#result .down_button").click(function(){
 		var nextData = undoAnswer();
 		if(nextData.pId !== undefined){
 			newQ(nextData);
