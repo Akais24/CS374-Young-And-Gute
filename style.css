@@ -436,12 +436,18 @@ body{
 /* border: 5px solid #ff8a4f; */
 }
 
+.back_button_bg{
+    float:left;
+    width:100px;
+    text-align: center;
+}
+
 .back_button{
-    background-size: 100px 100px;
-    width: 28px;
-    height: 28px;
-    margin-left: 15px;
-    margin-top: 12px;
+    width: 40px;
+    height: 80px;
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
 }
 .back_button:focus{
     outline: none;
@@ -449,13 +455,13 @@ body{
 
 
 .question{
-    width: 1200px;
+    width: 100%;
     margin: 0 auto;
     text-align: center;
     font-size: 40px;
     font-weight: bold;
-    margin-top: 30px;
-    margin-bottom: 30px;
+    padding-top: 30px;
+    padding-bottom: 10px;
 }
 
 .choices{

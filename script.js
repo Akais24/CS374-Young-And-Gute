@@ -55,7 +55,7 @@ function set_question(){
 			reset_query();
 			await fadeInComponentById("intro");
 		} else {
-			newQ(prevQni);
+			newQ(prevQni,true);
 		}
 	});
 	

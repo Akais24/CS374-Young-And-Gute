@@ -8,7 +8,7 @@ const offsetGrid = [
 
 let imgpnt = [-1,-1,-1,-1,-1,-1,-1,-1,-1];
 
-async function newQ(qni){
+async function newQ(qni, reverse=false){
 	// 1) go to fail
     if (qni === undefined) {
 		await fadeOutComponentById("question");
@@ -23,7 +23,7 @@ async function newQ(qni){
 	}
 
 	// 2) go to question
-    change_query(qni);
+    change_query(qni, reverse);
 
 	// manipuate candidate images
 	var curimgs = qni.images;
@@ -104,23 +104,47 @@ function disappearDiv(index){
     });
 }
 
-function hide_query(callback) {
-	return  $(".query").fadeOut(fadeTime, callback);
+function hide_query(reverse,callback) {
+	// return $(".query").animate({
+	// 	opacity: 0.0,
+	// },500,callback)
+	$(".query").fadeOut({queue:false, duration:fadeTime});
+	if(reverse){
+		$(".question").animate({marginLeft:20},{duration:fadeTime, complete:callback});
+		$(".question").animate({marginLeft:-20},{duration:1});
+	}
+	else{
+		$(".question").animate({marginLeft:-20},{duration:fadeTime, complete:callback});
+		$(".question").animate({marginLeft:20},{duration:1});
+	}
+	
+}
+
+function hide_query_reverse(callback) {
+	// return $(".query").animate({
+	// 	opacity: 0.0,
+	// },500,callback)
+	$(".query").fadeOut({queue:false, duration:fadeTime});
+	$(".question").animate({marginLeft:20},{duration:fadeTime, complete:callback});
+	$(".question").animate({marginLeft:-20},{duration:1});
 }
 
 function show_query() {
     return new Promise((resolve, reject) => {
-        $(".query").fadeIn(fadeTime, resolve);
+		$(".back_button_bg").show();
+		$(".query").fadeIn({queue:false, duration:fadeTime});
+		$(".question").animate({marginLeft:0},{duration:fadeTime, complete:resolve});
     });
 }
 
 function reset_query() {
+	$(".back_button_bg").hide();
     $(".question").empty();
     $(".choices").empty();
 }
 
-function change_query(qni){
-    hide_query(async function() {
+function change_query(qni, reverse){
+    hide_query(reverse,async function() {
 		reset_query();
 		// set next query
 		var query = qni.question;
