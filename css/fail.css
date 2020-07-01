@@ -10,12 +10,15 @@
     background-repeat: no-repeat;
 }
 
-#fail_image_item {
+#fail_back_button{
     width: 550px;
     height: 400px;
     padding: 50px;
     padding-bottom: 50px;
     margin: auto;
+}
+#fail_back_button .back_button{
+    left:10%;
 }
 
 .fail_image {

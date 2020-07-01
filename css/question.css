@@ -110,7 +110,7 @@
 	position: absolute;
 	width: 13em;
     height: 2em;
-    left: -1.2em;
+    /*left: -1.2em;*/
     background-image: url("../images/bookclip.png");
     background-size: contain;
     color: #FFFFFF;
@@ -143,7 +143,7 @@
 #question_candidate_image_text {
 	display:table-cell;
 	vertical-align:middle;
-    padding-left: 1.7em;
+    padding-left: 1em;
     /*color: #ff8a4f;*/
 }
 

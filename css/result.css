@@ -2,11 +2,11 @@
 
 #result {
     margin: auto;
-    width: 1300px;
+    width: 1200px;
     height: 100%;
     background: #FFFFFF;
     /* margin-top:100%; */
-    margin-left:-650px;
+    margin-left:-600px;
     position: absolute;
     top:0px;
     left:50%;
