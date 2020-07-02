@@ -8,6 +8,7 @@
     background-image: url("../images/no_idea.png");
     background-size: contain;
     background-repeat: no-repeat;
+    position: relative;
 }
 
 #fail_back_button{
@@ -18,7 +19,7 @@
     margin: auto;
 }
 #fail_back_button .back_button{
-    left:10%;
+    left:5%;
 }
 
 .fail_image {
