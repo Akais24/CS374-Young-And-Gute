@@ -1,4 +1,4 @@
-const maxImageLimit = 8;
+const maxImageLimit = 10;
 
 let answers = [];
 let currentQuestionIndex = undefined;
